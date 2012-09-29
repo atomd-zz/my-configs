@@ -1,0 +1,4 @@
+[ui]
+username = atomd <dwb319@gmail.com>
+verbose = True
+ssh = ssh -C
