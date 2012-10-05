@@ -17,8 +17,25 @@ link vimrc
 vim +BundleInstall +qall
 
 echo "init git ..."
+IGN="$HOME/.templates.gitignore"
+if [ ! -d $IGN ]; then
+    git clone https://github.com/github/gitignore.git $IGN
+fi
+
+#link gitignore
+cat "$IGN/Global/Archives.gitignore"    \
+    "$IGN/Global/CVS.gitignore"         \
+    "$IGN/Global/Emacs.gitignore"       \
+    "$IGN/Global/Linux.gitignore"       \
+    "$IGN/Global/Mercurial.gitignore"   \
+    "$IGN/Global/Tags.gitignore"        \
+    "$IGN/Global/VirtualEnv.gitignore"  \
+    "$IGN/Global/vim.gitignore"         \
+    "$IGN/Autotools.gitignore"          \
+    dotfiles/gitignore                  \
+    > "$HOME/.gitignore"
+
 link gitconfig
-link gitignore
 
 echo "init hg ..."
 link hgrc
@@ -28,7 +45,6 @@ echo "init zsh ..."
 link zshrc
 
 echo "init python env ..."
-
 if which easy_install > /dev/null; then
     echo "easy_install has already installed"
 else
