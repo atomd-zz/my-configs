@@ -35,6 +35,7 @@ cat "$IGN/Global/Archives.gitignore"    \
     dotfiles/gitignore                  \
     > "$HOME/.gitignore"
 
+link gitattributes
 link gitconfig
 
 echo "init hg ..."
