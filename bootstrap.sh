@@ -76,5 +76,9 @@ else
     echo "install zsh"
     sudo apt-get install zsh
 fi
-sudo chsh -s `which zsh`
+
+if ! echo $SHELL | grep -q zsh; then
+    echo "shell is changed to zsh"
+    sudo chsh -s `which zsh`
+fi
 
