@@ -33,7 +33,11 @@ plugins=(git mercurial python vundle pip)
 
 source $ZSH/oh-my-zsh.sh
 
-# Customize to your needs...
+## Customize to your needs...
+# turns on spelling correction for commands
+setopt nocorrect
+# ORRECTALL option turns on spelling correction for all arguments
+# setopt nocorrectall
 
 # Copy from Theme gallifrey
 local return_code="%(?..%{$fg[red]%}%? ↵%{$reset_color%})"
