@@ -148,6 +148,8 @@ nnoremap <leader><space> :noh<cr>
 nnoremap <leader>ss :source ~/.vimrc<CR>
 nnoremap <leader>ee :e ~/.vimrc<CR>
 
+au FileType c,cpp nmap <buffer> <F5> :make<CR>
+
 " Tabs
 nnoremap <silent> <S-h> :tabprev<CR>
 noremap <silent> <S-l> :tabnext<CR>
