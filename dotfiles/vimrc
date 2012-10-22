@@ -230,5 +230,17 @@ Bundle 'corntrace/bufexplorer.git'
 ""let g:bufExplorerUseCurrentWindow=1  " Open in new window.
 autocmd BufWinEnter \[Buf\ List\] setl nonumber
 
+Bundle 'davidhalter/jedi-vim.git'
+"let g:jedi#auto_initialization = 0
+"let g:jedi#goto_command = '<leader>g'
+"let g:jedi#get_definition_command = '<leader>d'
+"let g:jedi#pydoc = 'K'
+"let g:jedi#use_tabs_not_buffers = 0
+"let g:jedi#popup_on_dot = 0
+"let g:jedi#rename_command = '<leader>r'
+"let g:jedi#related_names_command = '<leader>n'
+
+Bundle 'ervandew/supertab.git'
+
 filetype plugin indent on      " Automatically detect file types.
 " " }}}

@@ -16,6 +16,12 @@ link vim
 link vimrc
 vim +BundleInstall +qall
 
+echo "git submodule update --init for jedi-vim"
+JEDI="dotfiles/vim/bundle/jedi-vim"
+if [ ! -d $JEDI ]; then
+    git --git-dir=$JEDI submodule update --init
+fi
+
 echo "init git ..."
 IGN="$HOME/.templates.gitignore"
 if [ ! -d $IGN ]; then
