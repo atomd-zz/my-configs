@@ -86,6 +86,6 @@ fi
 
 if ! echo $SHELL | grep -q zsh; then
     echo "shell is changed to zsh"
-    sudo chsh -s `which zsh`
+    chsh -s `which zsh`
 fi
 
