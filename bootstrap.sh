@@ -18,6 +18,7 @@ echo "init vim ...."
 if [ ! -d dotfiles/vim/bundle/vundle ]; then
     git clone https://github.com/gmarik/vundle.git dotfiles/vim/bundle/vundle
 fi
+sudo apt-get install exuberant-ctags
 link vim
 link vimrc
 vim +BundleInstall +qall
@@ -27,6 +28,10 @@ JEDI="dotfiles/vim/bundle/jedi-vim"
 if [ ! -d $JEDI ]; then
     git --git-dir=$JEDI submodule update --init
 fi
+
+echo "change to tsinghua PyPi"
+link pydistutils.cfg
+link2fdr pip.conf pip
 
 echo "init git ..."
 IGN="$HOME/.templates.gitignore"
@@ -63,11 +68,15 @@ if which easy_install > /dev/null; then
 else
     apt-get install python-setuptools
 fi
+
 if which pip > /dev/null; then
     echo "pip has already installed"
 else
-    sudo easy_install pip
+    sudo apt-get install python-pip python-dev build-essential
+    sudo pip install --upgrade pip
+    sudo pip install --upgrade virtualenv
 fi
+
 if which virtualenv > /dev/null; then
     echo "virtualenv has already installed"
 else
@@ -91,10 +100,6 @@ else
 fi
 
 if ! echo $SHELL | grep -q zsh; then
-    echo "shell is changed to zsh"
-    chsh -s `which zsh`
+    echo 'You need: chsh -s `which zsh`'
 fi
 
-echo "change to tsinghua PyPi"
-link pydistutils.cfg
-link2fdr pip.conf pip
