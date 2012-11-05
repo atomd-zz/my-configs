@@ -8,6 +8,12 @@ link() {
     fi
 }
 
+link2fdr() {
+    if [ ! -h $HOME/.$2/$1 ]; then
+       ln -s "`pwd`/dotfiles/$1" "$HOME/.$2/$1"
+    fi
+}
+
 echo "init vim ...."
 if [ ! -d dotfiles/vim/bundle/vundle ]; then
     git clone https://github.com/gmarik/vundle.git dotfiles/vim/bundle/vundle
@@ -89,3 +95,6 @@ if ! echo $SHELL | grep -q zsh; then
     chsh -s `which zsh`
 fi
 
+echo "change to tsinghua PyPi"
+link pydistutils.cfg
+link2fdr pip.conf pip
