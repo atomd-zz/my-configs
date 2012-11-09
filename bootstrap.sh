@@ -46,7 +46,6 @@ cat "$IGN/Global/Archives.gitignore"    \
     "$IGN/Global/Linux.gitignore"       \
     "$IGN/Global/Mercurial.gitignore"   \
     "$IGN/Global/Tags.gitignore"        \
-    "$IGN/Global/VirtualEnv.gitignore"  \
     "$IGN/Global/vim.gitignore"         \
     "$IGN/Autotools.gitignore"          \
     dotfiles/gitignore                  \
