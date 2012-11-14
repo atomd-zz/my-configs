@@ -27,6 +27,8 @@ set incsearch
 set magic                      "除了 $ . * ^ 之外其他元字符都要加反斜杠
 set ignorecase
 
+set fileencodings=utf-8,cp936,gbk,gb18030,big5,latin1
+
 let g:is_posix=1               " vim's default is archaic bourne shell, bring it up to the 90s
 let mapleader=","
 " "}}}
@@ -39,10 +41,6 @@ set fo-=t                      " Do no auto-wrap text using textwidth (does not 
 set wrap
 "set linebreak
 set textwidth=0                " Don't wrap lines by default
-augroup vimrc_autocmds
-    autocmd BufEnter * highlight OverLength ctermbg=96 guibg=#592929
-    autocmd BufEnter * match OverLength /\%73v/ "/\%83v.*/
-augroup END
 
 set tabstop=4                  " tab size eql 2 spaces
 set softtabstop=4
@@ -65,6 +63,16 @@ set cinwords+=for,switch,case
 " "}}}
 
 " Visual "{{{
+if has("gui_running")
+    set guioptions=cMg " console dialogs, do not show menu and toolbar
+    colorscheme molokai
+    let g:pretty_statusline=1
+    "colorscheme vividchalk
+else
+    colorscheme wombat256
+    set t_Co=256
+endif
+
 syntax on                      " enable syntax
 
 set mouse=a "enable mouse in GUI mode
@@ -81,7 +89,6 @@ set novisualbell              " No blinking
 set noerrorbells              " No noise.
 set t_vb=                     " disable any beeps or flashes on error
 
-set laststatus=2              " always show status line.
 set shortmess=atI             " shortens messages
 set showcmd                   " display an incomplete command in statusline
 
@@ -90,14 +97,19 @@ set virtualedit=onemore       "允许操作最后一个字符
 set scrolloff=5               "光标在窗口上下边界时距离边界5行即开始滚屏
 set wildmenu                  "命令行补全以增强模式运行
 
-set statusline=%<%f\          " custom statusline
-set stl+=[%{&ff}]             " show fileformat
-set stl+=[%{&encoding}]
-set stl+=%y%m%r%=
-set stl+=%-14.(%l,%c%V%)\ %P
+if exists('+colorcolumn')
+    set colorcolumn=80
+    hi ColorColumn ctermbg=96  guibg=#592929
+else
+    augroup vimrc_autocmds
+        autocmd BufEnter * highlight OverLength ctermbg=96 guibg=#592929
+        autocmd BufEnter * match OverLength /\%81v/ "/\%83v.*/
+    augroup END
+endif
+
 
 "set cursorline               "highlight current line
-"set fillchars=vert:\ ,stl:\ ,stlnc:\
+set fillchars=vert:\ ,stl:\ ,stlnc:\
 
 "http://vim.wikia.com/wiki/All_folds_open_when_open_a_file
 set foldenable                " Turn on folding
@@ -109,25 +121,13 @@ set splitbelow
 set splitright
 
 set list                      " display unprintable characters f12 - switches
-"set listchars=tab:\ ·
 set listchars=tab:▸\ 
 "set listchars+=eol:¬
 set listchars+=trail:·
 set listchars+=extends:»,precedes:«
 map <silent> <F12> :set invlist<CR>
 
-if has('gui_running')
-    set guioptions=cMg " console dialogs, do not show menu and toolbar
-else
-    set t_Co=256
-endif
-
-if has('unix')
-    set guifont=monospace\ 10
-    "set guifont=Consolas\ 11
-else
-    set guifont=Monaco\ 10
-end
+"set guifont=Monaco:h10:cANSI
 
 "set lines=40 columns=80
 " "}}}
@@ -190,13 +190,6 @@ Bundle 'jimenezrick/vimerl.git'
 
 " Colorscheme
 "Bundle 'noah/vim256-color.git'
-if has("gui_running")
-    colorscheme molokai
-    "colorscheme vividchalk
-else
-    colorscheme wombat256
-endif
-
 Bundle 'atomd/snipmate.vim.git'
 
 Bundle 'vim-scripts/taglist.vim.git'                                                                                                                           
