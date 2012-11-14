@@ -99,10 +99,10 @@ set wildmenu                  "命令行补全以增强模式运行
 
 if exists('+colorcolumn')
     set colorcolumn=80
-    hi ColorColumn ctermbg=96  guibg=#592929
+    hi ColorColumn ctermbg=234  guibg=#592929
 else
     augroup vimrc_autocmds
-        autocmd BufEnter * highlight OverLength ctermbg=96 guibg=#592929
+        autocmd BufEnter * highlight OverLength ctermbg=234 guibg=#592929
         autocmd BufEnter * match OverLength /\%81v/ "/\%83v.*/
     augroup END
 endif
@@ -113,15 +113,15 @@ set fillchars=vert:\ ,stl:\ ,stlnc:\
 
 "http://vim.wikia.com/wiki/All_folds_open_when_open_a_file
 set foldenable                " Turn on folding
-autocmd Syntax c,cpp,vim,xml,html,xhtml setlocal foldmethod=syntax
-autocmd Syntax python setlocal foldmethod=indent
+autocmd Syntax c,cpp,vim,xml,html,xhtml setlocal foldmethod=syntax nowrap
+autocmd Syntax python setlocal foldmethod=indent nowrap
 set foldlevelstart=20
 
 set splitbelow
 set splitright
 
 set list                      " display unprintable characters f12 - switches
-set listchars=tab:▸\ 
+set listchars=tab:▸\
 "set listchars+=eol:¬
 set listchars+=trail:·
 set listchars+=extends:»,precedes:«
@@ -192,7 +192,7 @@ Bundle 'jimenezrick/vimerl.git'
 "Bundle 'noah/vim256-color.git'
 Bundle 'atomd/snipmate.vim.git'
 
-Bundle 'vim-scripts/taglist.vim.git'                                                                                                                           
+Bundle 'vim-scripts/taglist.vim.git'
 "let Tlist_Ctags_Cmd="/usr/bin/ctags-exuberant"  "如果没有在PATH变量中设置
 let Tlist_Show_One_File=1  "只显示一个文件的tag
 "let Tlist_OnlyWindow=1
@@ -234,6 +234,7 @@ Bundle 'davidhalter/jedi-vim.git'
 "let g:jedi#related_names_command = '<leader>n'
 
 Bundle 'ervandew/supertab.git'
+Bundle 'roman/golden-ratio.git'
 
 filetype plugin indent on      " Automatically detect file types.
 " " }}}
