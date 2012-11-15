@@ -38,7 +38,7 @@ set fo+=o                      " Automatically insert the current comment leader
 set fo-=r                      " Do not automatically insert a comment leader after an enter
 set fo-=t                      " Do no auto-wrap text using textwidth (does not apply to comments)
 
-set wrap
+set nowrap
 "set linebreak
 set textwidth=0                " Don't wrap lines by default
 
@@ -99,11 +99,11 @@ set wildmenu                  "命令行补全以增强模式运行
 
 if exists('+colorcolumn')
     set colorcolumn=80
-    hi ColorColumn ctermbg=234  guibg=#592929
+    hi ColorColumn ctermbg=236  guibg=#363636
 else
     augroup vimrc_autocmds
-        autocmd BufEnter * highlight OverLength ctermbg=234 guibg=#592929
-        autocmd BufEnter * match OverLength /\%81v/ "/\%83v.*/
+        autocmd BufEnter * highlight OverLength ctermbg=236 guibg=#363636
+        autocmd BufEnter * match OverLength /\%81v/ "/\%81v.*/
     augroup END
 endif
 
@@ -113,8 +113,8 @@ set fillchars=vert:\ ,stl:\ ,stlnc:\
 
 "http://vim.wikia.com/wiki/All_folds_open_when_open_a_file
 set foldenable                " Turn on folding
-autocmd Syntax c,cpp,vim,xml,html,xhtml setlocal foldmethod=syntax nowrap
-autocmd Syntax python setlocal foldmethod=indent nowrap
+autocmd Syntax c,cpp,vim,xml,html,xhtml setlocal foldmethod=syntax
+autocmd Syntax python setlocal foldmethod=indent
 set foldlevelstart=20
 
 set splitbelow
@@ -169,7 +169,7 @@ map <leader>2h :runtime! syntax/2html.vim<CR>
 
 " AutoCommands " {{{
 au BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru}     set ft=ruby tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab
-au BufRead,BufNewFile {*.md,*.mkd,*.markdown}                         set ft=markdown
+au BufRead,BufNewFile {*.md,*.mkd,*.markdown}                         set ft=markdown wrap
 au! BufReadPost       {COMMIT_EDITMSG,*/COMMIT_EDITMSG}               set ft=gitcommit noml list| norm 1G
 au! BufWritePost      *.snippet                                       call ReloadAllSnippets()
 " open help in vertical split
