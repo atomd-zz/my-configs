@@ -1,7 +1,21 @@
-" General "{{{
+" Term: " {{{
+if &term =~ 'xterm' || $TERM =~ 'xterm-256color'
+    if has('terminfo')
+        set ttyfast
+        set t_Co=256
+        "光标的形状或颜色
+        let &t_SI = "\<Esc>]12;lightgreen\x7"
+        let &t_EI = "\<Esc>]12;RoyalBlue1\x7"
+    endif
+endif
+" }}}
+
+" General: "{{{
+
 set nocompatible               " be iMproved
 
 set history=256                " Number of things to remember in history.
+set updatetime=1000
 "set timeoutlen=250             " Time to wait after ESC (default causes an annoying delay)
 set clipboard+=unnamed         " Yanks go on clipboard instead.
 set pastetoggle=<F10>          " toggle between paste and normal: for 'safer' pasting from keyboard
@@ -10,6 +24,8 @@ set tags=./tags;$HOME          " walk directory tree upto $HOME looking for tags
 
 set modeline
 set modelines=5                " default numbers of lines to read for modeline instructions
+
+set helplang=cn,en
 
 set autowrite                  " Writes on make/shell commands
 set autoread
@@ -27,20 +43,27 @@ set incsearch
 set magic                      "除了 $ . * ^ 之外其他元字符都要加反斜杠
 set ignorecase
 
-set fileencodings=utf-8,cp936,gbk,gb18030,big5,latin1
+set nobomb
+set formatoptions+=mm
+set fileformat=unix
+set fileformats=unix,dos,mac
+set termencoding=utf-8
+set encoding=utf-8
+set fileencoding=utf-8
+set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,big5,cp936,chinese,euc-jp,euc-kr,latin1
 
 let g:is_posix=1               " vim's default is archaic bourne shell, bring it up to the 90s
 let mapleader=","
 " "}}}
 
-" Formatting "{{{
+" Formatting: "{{{
+
 set fo+=o                      " Automatically insert the current comment leader after hitting 'o' or 'O' in Normal mode.
 set fo-=r                      " Do not automatically insert a comment leader after an enter
 set fo-=t                      " Do no auto-wrap text using textwidth (does not apply to comments)
 
 set nowrap
 "set linebreak
-set textwidth=0                " Don't wrap lines by default
 
 set tabstop=4                  " tab size eql 2 spaces
 set softtabstop=4
@@ -62,21 +85,38 @@ set cinwords+=for,switch,case
 
 " "}}}
 
-" Visual "{{{
-if has("gui_running")
+" Visual: "{{{
+
+" GUI: " {{{
+if has('gui_running')
     set guioptions=cMg " console dialogs, do not show menu and toolbar
+    set guitablabel=%{GuiTabLabel()}
+    set toolbar=icons
+    set toolbariconsize=tiny
+    " Toggle Menu and Toolbar
+    map <silent> <F11> :if &guioptions =~# 'T' <Bar>
+        \set guioptions-=T <Bar>
+        \set guioptions-=m <Bar>
+        \else <Bar>
+        \set guioptions+=T <Bar>
+        \set guioptions+=m <Bar>
+        \endif<CR>
+
     colorscheme molokai
     let g:pretty_statusline=1
-    "colorscheme vividchalk
+
+elseif &t_Co >= 256
+    colorscheme wombat256p
 else
-    colorscheme wombat256
-    set t_Co=256
+   colorscheme evening
 endif
 
 syntax on                      " enable syntax
 
-set mouse=a "enable mouse in GUI mode
-set mousehide                 " Hide mouse after chars typed
+if has('mouse')
+    set mouse=a "enable mouse in GUI mode
+    set mousehide                 " Hide mouse after chars typed
+endif
 
 set number                    " line numbers Off
 set showmatch                 " Show matching brackets.
@@ -94,9 +134,13 @@ set showcmd                   " display an incomplete command in statusline
 
 set virtualedit=onemore       "允许操作最后一个字符
 
-set scrolloff=5               "光标在窗口上下边界时距离边界5行即开始滚屏
+set scrolloff=3               "光标在窗口上下边界时距离边界5行即开始滚屏
+set sidescrolloff=7
+set sidescroll=1
 set wildmenu                  "命令行补全以增强模式运行
 
+set textwidth=79
+set cursorline
 if exists('+colorcolumn')
     set colorcolumn=80
     hi ColorColumn ctermbg=236  guibg=#363636
@@ -107,6 +151,10 @@ else
     augroup END
 endif
 
+set title
+set titleold="Terminal"
+set titlestring=%F\ -\ Vim
+set titlelen=95
 
 "set cursorline               "highlight current line
 set fillchars=vert:\ ,stl:\ ,stlnc:\
@@ -127,12 +175,10 @@ set listchars+=trail:·
 set listchars+=extends:»,precedes:«
 map <silent> <F12> :set invlist<CR>
 
-"set guifont=Monaco:h10:cANSI
-
 "set lines=40 columns=80
 " "}}}
 
-" Key mappings " {{{
+" KeyMappings: " {{{
 "强制禁止自己使用上下左右键
 nnoremap <up> <nop>
 nnoremap <down> <nop>
@@ -164,10 +210,10 @@ nnoremap <silent> <C-l> :wincmd l<CR>
 
 " generate HTML version current buffer using current color scheme
 map <leader>2h :runtime! syntax/2html.vim<CR>
-
+set pastetoggle=<F2>
 " " }}}
 
-" AutoCommands " {{{
+" AutoCommands: " {{{
 au BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru}     set ft=ruby tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab
 au BufRead,BufNewFile {*.md,*.mkd,*.markdown}                         set ft=markdown wrap
 au! BufReadPost       {COMMIT_EDITMSG,*/COMMIT_EDITMSG}               set ft=gitcommit noml list| norm 1G
@@ -176,7 +222,7 @@ au! BufWritePost      *.snippet                                       call Reloa
 "au BufWinEnter *.txt if &ft == 'help' | wincmd H | endif
 " " }}}
 
-" Scripts and Bundles " {{{
+" ScriptsAndBundles: " {{{
 filetype off
 runtime macros/matchit.vim
 set rtp+=~/.vim/bundle/vundle/
@@ -189,7 +235,7 @@ Bundle 'vim-scripts/python.vim.git'
 Bundle 'jimenezrick/vimerl.git'
 
 " Colorscheme
-"Bundle 'noah/vim256-color.git'
+Bundle 'noah/vim256-color.git'
 Bundle 'atomd/snipmate.vim.git'
 
 Bundle 'vim-scripts/taglist.vim.git'
@@ -235,6 +281,8 @@ Bundle 'davidhalter/jedi-vim.git'
 
 Bundle 'ervandew/supertab.git'
 Bundle 'roman/golden-ratio.git'
+Bundle 'guns/xterm-color-table.vim'
 
 filetype plugin indent on      " Automatically detect file types.
+
 " " }}}
