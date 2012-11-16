@@ -87,30 +87,6 @@ set cinwords+=for,switch,case
 
 " Visual: "{{{
 
-" GUI: " {{{
-if has('gui_running')
-    set guioptions=cMg " console dialogs, do not show menu and toolbar
-    set guitablabel=%{GuiTabLabel()}
-    set toolbar=icons
-    set toolbariconsize=tiny
-    " Toggle Menu and Toolbar
-    map <silent> <F11> :if &guioptions =~# 'T' <Bar>
-        \set guioptions-=T <Bar>
-        \set guioptions-=m <Bar>
-        \else <Bar>
-        \set guioptions+=T <Bar>
-        \set guioptions+=m <Bar>
-        \endif<CR>
-
-    colorscheme molokai
-    let g:pretty_statusline=1
-
-elseif &t_Co >= 256
-    colorscheme wombat256p
-else
-   colorscheme evening
-endif
-
 syntax on                      " enable syntax
 
 if has('mouse')
@@ -286,4 +262,30 @@ Bundle 'guns/xterm-color-table.vim'
 
 filetype plugin indent on      " Automatically detect file types.
 
-" " }}}
+" }}}
+
+" GUI: " {{{
+if has('gui_running')
+    set guioptions=cMg " console dialogs, do not show menu and toolbar
+    set guitablabel=%{GuiTabLabel()}
+    set toolbar=icons
+    set toolbariconsize=tiny
+    " Toggle Menu and Toolbar
+    map <silent> <F11> :if &guioptions =~# 'T' <Bar>
+        \set guioptions-=T <Bar>
+        \set guioptions-=m <Bar>
+        \else <Bar>
+        \set guioptions+=T <Bar>
+        \set guioptions+=m <Bar>
+        \endif<CR>
+
+    colorscheme molokai
+    let g:pretty_statusline=1
+
+elseif &t_Co >= 256
+    " colorscheme wombat256p
+    colorscheme railscasts
+else
+   colorscheme evening
+endif
+" }}}
