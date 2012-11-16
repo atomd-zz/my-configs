@@ -211,7 +211,7 @@ nnoremap <silent> <C-l> :wincmd l<CR>
 " generate HTML version current buffer using current color scheme
 map <leader>2h :runtime! syntax/2html.vim<CR>
 set pastetoggle=<F2>
-cmap w!!! w !sudo tee % > /dev/null
+cmap w!! w !sudo tee % > /dev/null
 " " }}}
 
 " AutoCommands: " {{{
