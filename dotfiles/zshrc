@@ -34,8 +34,8 @@ plugins=(git mercurial python vundle pip)
 source $ZSH/oh-my-zsh.sh
 
 ## Customize to your needs...
-# turns on spelling correction for commands
-setopt nocorrect
+unsetopt correct_all
+
 # ORRECTALL option turns on spelling correction for all arguments
 # setopt nocorrectall
 
