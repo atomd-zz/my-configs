@@ -116,16 +116,6 @@ set sidescroll=1
 set wildmenu                  "命令行补全以增强模式运行
 
 set textwidth=79
-set cursorline
-if exists('+colorcolumn')
-    set colorcolumn=80
-    hi ColorColumn ctermbg=236  guibg=#363636
-else
-    augroup vimrc_autocmds
-        autocmd BufEnter * highlight OverLength ctermbg=236 guibg=#363636
-        autocmd BufEnter * match OverLength /\%81v/ "/\%81v.*/
-    augroup END
-endif
 
 set title
 set titleold="Terminal"
@@ -187,6 +177,10 @@ nnoremap <silent> <C-l> :wincmd l<CR>
 " generate HTML version current buffer using current color scheme
 map <leader>2h :runtime! syntax/2html.vim<CR>
 set pastetoggle=<F2>
+" NERDTree
+noremap <silent> <leader>n :execute 'NERDTreeToggle ' . getcwd()<CR>
+noremap <silent> <leader>N :NERDTreeFind<CR>
+
 cmap w!! w !sudo tee % > /dev/null
 " " }}}
 
@@ -257,8 +251,16 @@ Bundle 'davidhalter/jedi-vim.git'
 "let g:jedi#related_names_command = '<leader>n'
 
 Bundle 'ervandew/supertab.git'
-Bundle 'roman/golden-ratio.git'
+" Bundle 'roman/golden-ratio.git'
 Bundle 'guns/xterm-color-table.vim'
+
+Bundle 'scrooloose/nerdtree.git'
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+let g:NERDTreeMinimalUI=1
+let g:NERDTreeShowBookmarks=1
+let g:NERDTreeMapOpenSplit='s'
+let g:NERDTreeMapOpenVSplit='v'
+"autocmd vimenter * if !argc() | NERDTree | endif
 
 filetype plugin indent on      " Automatically detect file types.
 
@@ -283,9 +285,21 @@ if has('gui_running')
     let g:pretty_statusline=1
 
 elseif &t_Co >= 256
-    " colorscheme wombat256p
-    colorscheme railscasts
+    colorscheme wombat256p
+    " colorscheme railscasts
 else
    colorscheme evening
 endif
+
+set cursorline
+if exists('+colorcolumn')
+    set colorcolumn=80
+    hi ColorColumn ctermbg=236  guibg=#363636
+else
+    augroup vimrc_autocmds
+        autocmd BufEnter * highlight OverLength ctermbg=236 guibg=#363636
+        autocmd BufEnter * match OverLength /\%81v/ "/\%81v.*/
+    augroup END
+endif
+
 " }}}
