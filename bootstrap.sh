@@ -10,6 +10,7 @@ link() {
 
 link2fdr() {
     if [ ! -h $HOME/.$2/$1 ]; then
+       mkdir -p "$HOME/.$2"
        ln -s "`pwd`/dotfiles/$1" "$HOME/.$2/$1"
     fi
 }
