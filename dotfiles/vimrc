@@ -240,6 +240,7 @@ autocmd BufWinEnter \[Buf\ List\] setl nonumber
 Bundle 'ervandew/supertab.git'
 Bundle 'vim-scripts/Mark--Karkat.git'
 Bundle 'kevinw/pyflakes-vim.git'
+let g:pyflakes_use_quickfix = 0
 Bundle 'guns/xterm-color-table.vim'
 
 Bundle 'scrooloose/nerdtree.git'
