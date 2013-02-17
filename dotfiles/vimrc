@@ -62,7 +62,7 @@ set fo+=o                      " Automatically insert the current comment leader
 set fo-=r                      " Do not automatically insert a comment leader after an enter
 set fo-=t                      " Do no auto-wrap text using textwidth (does not apply to comments)
 
-set nowrap
+set wrap
 "set linebreak
 
 set tabstop=4                  " tab size eql 2 spaces
@@ -177,9 +177,6 @@ nnoremap <silent> <C-l> :wincmd l<CR>
 " generate HTML version current buffer using current color scheme
 map <leader>2h :runtime! syntax/2html.vim<CR>
 set pastetoggle=<F2>
-" NERDTree
-noremap <silent> <leader>n :execute 'NERDTreeToggle ' . getcwd()<CR>
-noremap <silent> <leader>N :NERDTreeFind<CR>
 
 cmap w!! w !sudo tee % > /dev/null
 " " }}}
@@ -231,31 +228,24 @@ let Tlist_WinWidth=45
 nnoremap <silent><leader>tt :TlistToggle<cr>
 
 Bundle 'corntrace/bufexplorer.git'
-"let g:bufExplorerDefaultHelp=0       " Do not show default help.
-"let g:bufExplorerShowRelativePath=1  " Show relative paths.
-"let g:bufExplorerSortBy='mru'        " Sort by most recently used.
-"let g:bufExplorerSplitRight=0        " Split left.
-""let g:bufExplorerSplitVertical=1     " Split vertically.
-"let g:bufExplorerSplitVertSize = 10  " Split width
-""let g:bufExplorerUseCurrentWindow=1  " Open in new window.
+let g:bufExplorerDefaultHelp=0       " Do not show default help.
+let g:bufExplorerShowRelativePath=1  " Show relative paths.
+let g:bufExplorerSortBy='mru'        " Sort by most recently used.
+let g:bufExplorerSplitRight=0        " Split left.
+"let g:bufExplorerSplitVertical=1     " Split vertically.
+let g:bufExplorerSplitVertSize = 10  " Split width
+"let g:bufExplorerUseCurrentWindow=1  " Open in new window.
 autocmd BufWinEnter \[Buf\ List\] setl nonumber
 
-Bundle 'davidhalter/jedi-vim.git'
-"let g:jedi#auto_initialization = 0
-"let g:jedi#goto_command = '<leader>g'
-"let g:jedi#get_definition_command = '<leader>d'
-"let g:jedi#pydoc = 'K'
-"let g:jedi#use_tabs_not_buffers = 0
-"let g:jedi#popup_on_dot = 0
-"let g:jedi#rename_command = '<leader>r'
-"let g:jedi#related_names_command = '<leader>n'
-
 Bundle 'ervandew/supertab.git'
-" Bundle 'roman/golden-ratio.git'
+Bundle 'vim-scripts/Mark--Karkat.git'
+Bundle 'kevinw/pyflakes-vim.git'
 Bundle 'guns/xterm-color-table.vim'
 
 Bundle 'scrooloose/nerdtree.git'
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+noremap <silent> <leader>d :execute 'NERDTreeToggle ' . getcwd()<CR>
+noremap <silent> <leader>D :NERDTreeFind<CR>
 let g:NERDTreeMinimalUI=1
 let g:NERDTreeShowBookmarks=1
 let g:NERDTreeMapOpenSplit='s'
