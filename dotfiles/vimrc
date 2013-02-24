@@ -258,6 +258,13 @@ filetype plugin indent on      " Automatically detect file types.
 " }}}
 
 " GUI: " {{{
+if &term =~ '^\(xterm\|screen\|screen-256color\)$' && $COLORTERM == 'gnome-terminal'
+    set t_Co=256
+else
+    set t_Co=88
+endif
+
+
 if has('gui_running')
     set guioptions=cMg " console dialogs, do not show menu and toolbar
     set guitablabel=%{GuiTabLabel()}
@@ -276,7 +283,8 @@ if has('gui_running')
     let g:pretty_statusline=1
 
 elseif &t_Co >= 256
-    colorscheme wombat256p
+    colorscheme molokai
+    " colorscheme wombat256p
     " colorscheme railscasts
 else
    colorscheme evening

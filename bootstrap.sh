@@ -62,6 +62,9 @@ link hgrc
 echo "init zsh ..."
 link zshrc
 
+echo "init xmodmap ..."
+link xmodmap
+
 echo "init bash_aliases ..."
 link bash_aliases
 
@@ -95,6 +98,13 @@ if [ ! -d ~/.oh-my-zsh ]; then
     git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 fi
 
+
+if which tmux > /dev/null; then
+    echo "tmux has already installed"
+else
+    sudo apt-get install tmux
+fi
+
 if which zsh > /dev/null; then
     echo "zsh has already installed"
 else
@@ -105,4 +115,4 @@ fi
 if ! echo $SHELL | grep -q zsh; then
     echo 'You need: chsh -s `which zsh`'
 fi
-
+echo 'You need: add "xmodmap ~/.xmodmap" to /etc/rc.local'
