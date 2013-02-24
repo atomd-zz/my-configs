@@ -62,6 +62,9 @@ link hgrc
 echo "init zsh ..."
 link zshrc
 
+echo "init bash_aliases ..."
+link bash_aliases
+
 echo "init python env ..."
 if which easy_install > /dev/null; then
     echo "easy_install has already installed"
