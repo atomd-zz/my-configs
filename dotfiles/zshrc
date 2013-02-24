@@ -92,3 +92,13 @@ else
   ZSH_THEME_GIT_PROMPT_UNMERGED=" ═"
   ZSH_THEME_GIT_PROMPT_UNTRACKED=" ✭"
 fi
+
+### Profile
+if [ -f ~/.profile ]; then
+    source ~/.profile
+fi
+
+### aliases
+if [ -f ~/.bash_aliases ]; then
+    source ~/.bash_aliases
+fi
