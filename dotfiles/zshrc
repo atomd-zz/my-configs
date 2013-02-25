@@ -71,11 +71,6 @@ else
   ZSH_THEME_GIT_PROMPT_UNTRACKED=" ✭"
 fi
 
-# Profile
-if [ -f ~/.profile ]; then
-    source ~/.profile
-fi
-
 # Aliases
 if [ -f ~/.bash_aliases ]; then
     source ~/.bash_aliases

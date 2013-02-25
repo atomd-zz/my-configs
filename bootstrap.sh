@@ -63,7 +63,7 @@ echo "init zsh ..."
 link zshrc
 
 echo "init xmodmap ..."
-link xmodmap
+link Xmodmap
 
 echo "init bash_aliases ..."
 link bash_aliases
@@ -89,10 +89,10 @@ else
     sudo pip install virtualenv
 fi
 
-if [ ! -d $HOME/Workspace ]; then
-    echo "create Workspace"
-    mkdir "$HOME/Workspace"
-fi
+# if [ ! -d $HOME/Workspace ]; then
+#     echo "create Workspace"
+#     mkdir "$HOME/Workspace"
+# fi
 
 if [ ! -d ~/.oh-my-zsh ]; then
     git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
@@ -115,4 +115,3 @@ fi
 if ! echo $SHELL | grep -q zsh; then
     echo 'You need: chsh -s `which zsh`'
 fi
-echo 'You need: add "xmodmap ~/.xmodmap" to /etc/rc.local'
