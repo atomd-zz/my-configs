@@ -14,7 +14,6 @@ plugins=(pip fabric redis-cli vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
-
 # Customize
 unsetopt correct_all
 
@@ -33,30 +32,26 @@ if [ -n "$local256" ]; then
     export TERMCAP
   fi
 fi
-
 unset local256
 
-# Set theme
-if [[ $TERM = *256color* || $TERM = *rxvt* ]]; then
-    turquoise="%F{81}"
-    orange="%F{166}"
-    purple="%F{135}"
-    hotpink="%F{161}"
-    limegreen="%F{118}"
-else
-    turquoise="$fg[cyan]"
-    orange="$fg[yellow]"
-    purple="$fg[magenta]"
-    hotpink="$fg[red]"
-    limegreen="$fg[green]"
-fi
+
+eval turquoise="$fg[cyan]"
+eval orange="$fg[yellow]"
+eval purple="$fg[magenta]"
+eval hotpink="$fg[red]"
+eval limegreen="$fg[green]"
+eval my_gray='$FG[237]'
+
+_collapsed_wd() {
+  echo $(pwd | perl -pe "s|^$HOME|~|g; s|/([^/])[^/]*(?=/)|/\$1|g")
+}
 
 if [[ "$TERM" != "dumb" ]] && [[ "$DISABLE_LS_COLORS" != "true" ]]; then
+
   MODE_INDICATOR="%{$fg_bold[red]%}❮%{$reset_color%}%{$fg[red]%}❮❮%{$reset_color%}"
   local return_status="%{$fg[red]%}%(?..⏎)%{$reset_color%}"
 
-  PROMPT='%{$purple%}%n%{$reset_color%}@%{$orange%}%M %{$turquoise%}%c$(git_prompt_info) %(!.%{$hotpink%}#.%{$limegreen%}❯)%{$reset_color%} '
-
+  PROMPT='%{$purple%}%n%{$reset_color%}@%{$orange%}%M %{$turquoise%}$(_collapsed_wd)$(git_prompt_info) %(!.%{$hotpink%}#.%{$limegreen%}»)%{$reset_color%} '
   ZSH_THEME_GIT_PROMPT_PREFIX=" %{$fg[blue]%}git%{$reset_color%}:%{$hotpink%}"
   ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
   ZSH_THEME_GIT_PROMPT_DIRTY=""
