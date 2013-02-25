@@ -197,6 +197,7 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
+Bundle 'rodjek/vim-puppet.git'
 
 " Language
 Bundle 'vim-scripts/python.vim.git'
