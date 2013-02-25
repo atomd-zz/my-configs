@@ -7,4 +7,4 @@ alias la="ls -alF --color=auto"
 alias ls="ls --color=auto"
 
 alias grep="grep --color=auto"
-alias tmux="tmux -2"
+# alias tmux="tmux -2"

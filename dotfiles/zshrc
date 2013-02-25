@@ -14,9 +14,29 @@ plugins=(pip fabric redis-cli vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
+
 # Customize
 unsetopt correct_all
 
+# Set env term
+local256="$COLORTERM$XTERM_VERSION$ROXTERM_ID$KONSOLE_DBUS_SESSION"
+if [ -n "$local256" ]; then
+  case "$TERM" in
+    'xterm') TERM=xterm-256color;;
+    'screen') TERM=screen-256color;;
+    'Eterm') TERM=Eterm-256color;;
+  esac
+  export TERM
+
+  if [ -n "$TERMCAP" ] && [ "$TERM" = "screen-256color" ]; then
+    TERMCAP=$(echo "$TERMCAP" | sed -e 's/Co#8/Co#256/g')
+    export TERMCAP
+  fi
+fi
+
+unset local256
+
+# Set theme
 if [[ $TERM = *256color* || $TERM = *rxvt* ]]; then
     turquoise="%F{81}"
     orange="%F{166}"
@@ -75,3 +95,6 @@ fi
 if [ -f ~/.bash_aliases ]; then
     source ~/.bash_aliases
 fi
+
+# Set env pythonbrew
+[[ -s $HOME/.pythonbrew/etc/bashrc ]] && source $HOME/.pythonbrew/etc/bashrc
