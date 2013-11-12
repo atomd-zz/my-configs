@@ -3,17 +3,8 @@
 ;;; Main Emacs Settings File
 ;;==============================================================================
 
-(message ";;; init --> Start")
-
 (when (version< emacs-version "24.1")
   (error "Requires at least GNU Emacs 24.1"))
-
-
-;;==============================================================================
-;;; General Settings
-;;==============================================================================
-
-(message ";;; init --> General Settings")
 
 ;; set default user name
 (setq user-name "atomd")
@@ -44,15 +35,3 @@
 (require 'mode)
 (require 'editor)
 (require 'keybindings)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("99cbc2aaa2b77374c2c06091494bd9d2ebfe6dc5f64c7ccdb36c083aff892f7d" default))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

@@ -24,13 +24,16 @@ link vim
 link vimrc
 vim +BundleInstall +qall
 
-echo "git submodule update --init for jedi-vim"
-JEDI="dotfiles/vim/bundle/jedi-vim"
-if [ ! -d $JEDI ]; then
-    git --git-dir=$JEDI submodule update --init
-fi
+echo "init emacs ...."
+link emacs.d
 
-echo "change to tsinghua PyPi"
+# echo "git submodule update --init for jedi-vim"
+# JEDI="dotfiles/vim/bundle/jedi-vim"
+# if [ ! -d $JEDI ]; then
+#     git --git-dir=$JEDI submodule update --init
+# fi
+
+echo "init pypy config"
 link pydistutils.cfg
 link2fdr pip.conf pip
 
@@ -88,11 +91,6 @@ if which virtualenv > /dev/null; then
 else
     sudo pip install virtualenv
 fi
-
-# if [ ! -d $HOME/Workspace ]; then
-#     echo "create Workspace"
-#     mkdir "$HOME/Workspace"
-# fi
 
 if [ ! -d ~/.oh-my-zsh ]; then
     git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh

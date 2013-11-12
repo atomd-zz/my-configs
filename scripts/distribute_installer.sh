@@ -1,4 +1,3 @@
-
 n=python$version
 
 echo "== This script will install Distribute, pip, and virtualenv"

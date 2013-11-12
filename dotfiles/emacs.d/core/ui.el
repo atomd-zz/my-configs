@@ -1,17 +1,5 @@
 ;;; ui.el --- UI optimizations and tweaks.
 
-(setq-default custom-enabled-themes '(monokai))
-
-(defun reapply-themes ()
-  "Forcibly load the themes listed in `custom-enabled-themes'."
-  (dolist (theme custom-enabled-themes)
-    (unless (custom-theme-p theme)
-      (load-theme theme)))
-  (custom-set-variables `(custom-enabled-themes (quote ,custom-enabled-themes))))
-
-(add-hook 'after-init-hook 'reapply-themes)
-
-;; use zenburn as the default theme
 (when (fboundp 'tool-bar-mode)
   (tool-bar-mode -1))
 
@@ -45,6 +33,9 @@
 
 ;; enable y/n answers
 (fset 'yes-or-no-p 'y-or-n-p)
+
+;; use monokai as the default theme
+(load-theme 'monokai t)
 
 (provide 'ui)
 ;;; ui.el ends here
