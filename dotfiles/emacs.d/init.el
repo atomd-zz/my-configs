@@ -29,7 +29,7 @@
 
 ;; the core stuff
 (require 'packages)
-(require 'ui)
 (require 'mode)
+(require 'ui)
 (require 'editor)
 (require 'keybindings)

@@ -1,5 +1,9 @@
 ;;; ui.el --- UI optimizations and tweaks.
 
+
+(diminish 'global-visual-line-mode)
+(diminish 'visual-line-mode)
+
 (when (fboundp 'tool-bar-mode)
   (tool-bar-mode -1))
 

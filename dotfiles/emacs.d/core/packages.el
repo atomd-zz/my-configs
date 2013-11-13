@@ -19,20 +19,22 @@
 
 
 (defvar my-packages
-  '(ace-jump-mode
-    use-package
+  '(use-package
+    ace-jump-mode
     ack-and-a-half
     anzu
     dash
     diminish
     elisp-slime-nav
+    smart-mode-line
     epl
     expand-region
     flx-ido
     flycheck
     gist
     gitconfig-mode
-    gitignore-mode grizzl
+    gitignore-mode
+    grizzl
     guru-mode
     projectile
     ido-ubiquitous
@@ -52,7 +54,7 @@
     ("\\.coffee\\'" coffee-mode coffee-mode)
     ("\\.css\\'" css-mode css-mode)
     ("\\.csv\\'" csv-mode csv-mode)
-    ("\\.d\\'" d-mode d-mode)
+    ;;("\\.d\\'" d-mode d-mode)
     ("\\.dart\\'" dart-mode dart-mode)
     ("\\.erl\\'" erlang erlang-mode)
     ("\\.feature\\'" feature-mode feature-mode)
@@ -119,7 +121,7 @@
                                    (package-install ',package))
                                  (,mode)))))
 
-(refresh-packages my-packages)
+
 
 ;; build auto-install mappings
 (mapc
@@ -140,5 +142,7 @@
 (when (package-installed-p 'pkgbuild-mode)
   (add-to-list 'auto-mode-alist '("PKGBUILD\\'" . pkgbuild-mode)))
 
+(refresh-packages my-packages)
+(require 'use-package)
 (provide 'packages)
 ;; packages.el ends here

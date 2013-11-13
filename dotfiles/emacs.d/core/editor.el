@@ -1,10 +1,8 @@
 ; editor.el --- Enhanced editing experience.
 
-;; anzu-mode enhances isearch by showing total matches and current match position
-(require-package 'anzu)
-(require 'anzu)
-(diminish 'anzu-mode)
-(global-anzu-mode)
+;; highlight the current line
+(global-hl-line-mode +1)
+
 
 (provide 'editor)
 ;;; editor.el ends here
