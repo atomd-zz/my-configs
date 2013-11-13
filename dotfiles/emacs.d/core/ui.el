@@ -18,7 +18,18 @@
 (setq inhibit-startup-screen t)
 
 ;; Customize line numbers
-(setq linum-format " %d ")
+(setq linum-format 'dynamic)
+(add-hook 'linum-before-numbering-hook
+  (lambda ()
+    (unless (display-graphic-p)
+        (setq linum-format
+          (lambda (line)
+          (propertize
+            (format
+            (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
+            (concat "%" (number-to-string w) "d ")) line)
+            'face
+            'linum))))))
 
 ;; nice scrolling
 (setq scroll-margin 0
