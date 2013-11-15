@@ -26,6 +26,8 @@
     dash
     s
     helm
+    ibuffer-vc
+    ibuffer-git
     helm-projectile
     flx-ido
     ido-ubiquitous
