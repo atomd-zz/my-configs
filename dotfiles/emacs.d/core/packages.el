@@ -10,18 +10,10 @@
   (progn
     ;; (setq projectile-enable-caching t)
     ;; (setq projectile-require-project-root nil)
-    ;; (add-to-list 'projectile-globally-ignored-files ".DS_Store")
     (setq
       projectile-completion-system 'grizzl
       projectile-cache-file (expand-file-name  "projectile.cache" emacs-savefile-dir)
       projectile-known-projects-file (expand-file-name  "projectile.bookmarks" emacs-savefile-dir))))
-
-;;; volatile-highlights
-
-(use-package
-  volatile-highlights
-  :diminish volatile-highlights-mode
-  :init (volatile-highlights-mode t))
 
 ;;; anzu
 
@@ -37,15 +29,10 @@
   :diminish guru-mode
   :init (guru-global-mode t))
 
-;;; smart-mode-line
-
+;;; powerline
 (use-package
-  smart-mode-line
-  :disabled t
-  :config
-  (progn
-    (setq sml/theme 'dark)
-    (sml/setup)))
+  powerline
+  :init (powerline-default-theme))
 
 ;;; key chords
 
@@ -67,12 +54,15 @@
 (use-package
   ibuffer
   :bind ("C-x C-b" . ibuffer)
-  :init
-  (progn
-      (use-package ibuffer-vc)
-      (use-package ibuffer-git))
   :config
   (progn
+    ;; (use-package ibuffer-vc)
+    (use-package ibuffer-git)
+
+    (setq
+      ibuffer-show-empty-filter-groups nil
+      ibuffer-marked-char ?✓)
+
     (defvar my-ibuffer-filter-groups
       `(
         ("Terminals" (mode . term-mode))
@@ -145,28 +135,34 @@
     (defun my-ibuffer-hook ()
       (interactive)
       (ibuffer-do-sort-by-vc-status)
-      (setq
-        ibuffer-show-empty-filter-groups nil
-        ibuffer-marked-char ?✓
-        ibuffer-filter-groups (my-ibuffer-filter-groups)
-        ibuffer-formats
-        '((mark modified read-only vc-status-mini git-status-mini" "
-                (name 18 18 :left :elide)
-                " "
-                (size-h 9 -1 :right)
-                " "
-                (mode 16 16 :left :elide)
-                " "
-                (vc-status 16 16 :left)
-                " "
-                (git-status 8 8 :left)
-                " "
-                filename-and-process)))
+      (setq ibuffer-filter-groups (my-ibuffer-filter-groups))
+      (setq ibuffer-formats
+            '((mark modified read-only " "
+                    (name 18 18 :left :elide)
+                    " "
+                    (size-h 9 -1 :right)
+                    " "
+                    (mode 16 16 :left :elide)
+                    " " filename-and-process)
+              (mark modified read-only vc-status-mini git-status-mini " "
+                    (name 18 18 :left :elide)
+                    " "
+                    (size-h 9 -1 :right)
+                    " "
+                    (mode 16 16 :left :elide)
+                    " "
+                    (vc-status 16 16 :left)
+                    " "
+                    (git-status 8 8 :left)
+                    " " filename-and-process)))
       (ibuffer-update nil t))
 
     (add-hook 'ibuffer-hook #'my-ibuffer-hook)
     (define-key ibuffer-mode-map (kbd "M-D") 'my-ibuffer-clean)
     (define-key ibuffer-mode-map [?s ?v] #'ibuffer-do-sort-by-vc-status)))
+
+
+(global-set-key (kbd "C-c h") 'helm-projectile)
 
 ;;; ace-jump-mode
 
@@ -183,8 +179,8 @@
 
 (use-package
   winner
-  :if (not noninteractive)
   :diminish winner-mode
+  :if (not noninteractive)
   :init (winner-mode 1)
   :bind (("M-N" . winner-redo)
          ("M-P" . winner-undo)))
@@ -193,8 +189,6 @@
 
 (use-package
   helm-config
-  :init
-  (progn ())
   :bind (("C-c M-x" . helm-M-x)
          ("C-h a" . helm-c-apropos)
          ("M-s a" . helm-do-grep)
@@ -205,12 +199,11 @@
 
 (use-package
   ido
-  :init
-  (progn
-    (use-package ido-ubiquitous)
-    (use-package flx-ido))
+  :init (ido-mode t)
   :config
   (progn
+    (use-package ido-ubiquitous)
+    (use-package flx-ido)
     (setq
       ido-enable-prefix nil
       ido-enable-flex-matching t
@@ -221,9 +214,8 @@
       ido-default-file-method 'selected-window
       ido-auto-merge-work-directories-length -1
       ido-use-faces nil)
-    (ido-mode 1)
-    (ido-ubiquitous-mode 1)
-    (flx-ido-mode 1)))
+    (ido-ubiquitous-mode t)
+    (flx-ido-mode t)))
 
 ;;; css-mode
 

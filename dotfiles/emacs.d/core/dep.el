@@ -21,26 +21,28 @@
 (defvar my-packages
   '(use-package
     ace-jump-mode
-    ack-and-a-half
-    anzu
+    dired-single
     dash
-    s
-    helm
     ibuffer-vc
     ibuffer-git
+    undo-tree
+    key-chord
+    diminish
+    powerline
+    monokai-theme
+    ;; Need to learn
+    ack-and-a-half
+    anzu
+    s
+    helm
     helm-projectile
     flx-ido
     ido-ubiquitous
-    key-chord
-    diminish
     elisp-slime-nav
-    smart-mode-line
     epl
     expand-region
     flycheck
     gist
-    gitconfig-mode
-    gitignore-mode
     grizzl
     guru-mode ;;
     projectile
@@ -49,9 +51,6 @@
     rainbow-mode
     smartparens
     smex
-    undo-tree ;;
-    volatile-highlights
-    monokai-theme ;;
     ;; programming lang
     js2-mode
     csv-mode
@@ -67,6 +66,8 @@
     yaml-mode
     markdown-mode
     textile-mode
+    gitconfig-mode
+    gitignore-mode
     auctex
     erlang
     scala-mode2)
