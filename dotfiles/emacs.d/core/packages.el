@@ -161,9 +161,6 @@
     (define-key ibuffer-mode-map (kbd "M-D") 'my-ibuffer-clean)
     (define-key ibuffer-mode-map [?s ?v] #'ibuffer-do-sort-by-vc-status)))
 
-
-(global-set-key (kbd "C-c h") 'helm-projectile)
-
 ;;; ace-jump-mode
 
 (use-package
@@ -174,6 +171,17 @@
   :config
   (progn
     (eval-after-load "ace-jump-mode" '(ace-jump-mode-enable-mark-sync))))
+
+;;; smex
+(use-package
+  smex
+  :bind
+  (("M-x" . smex)
+   ("M-X" . smex-major-mode-commands))
+  :config
+  (progn
+    (setq smex-save-file (expand-file-name ".smex.items" emacs-savefile-dir))
+    (smex-initialize)))
 
 ;;; winner
 
@@ -210,7 +218,7 @@
       ido-create-new-buffer 'always
       ido-use-filename-at-point 'guess
       ido-max-prospects 10
-      ido-save-directory-list-file (expand-file-name "ido.history" emacs-savefile-dir)
+      ido-save-directory-list-file (expand-file-name ".ido.history" emacs-savefile-dir)
       ido-default-file-method 'selected-window
       ido-auto-merge-work-directories-length -1
       ido-use-faces nil)
