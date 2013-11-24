@@ -225,6 +225,75 @@
     (ido-ubiquitous-mode t)
     (flx-ido-mode t)))
 
+
+;;; auto-complete
+
+(use-package
+  auto-complete-config
+  :diminish auto-complete-mode
+  :init
+  (progn
+    (use-package pos-tip)
+    (ac-config-default))
+  :config
+  (progn
+    (ac-set-trigger-key "TAB")
+    (setq ac-use-menu-map t)
+    (setq ac-quick-help-prefer-pos-tip t)
+    (setq ac-use-quick-help t)
+    (setq ac-quick-help-delay 1.0)
+    (setq ac-fuzzy-enable t)
+    (setq ac-trigger-commands
+	  (cons 'backward-delete-char-untabify ac-trigger-commands))
+    (setq ac-comphist-file (concat emacs-savefile-dir "ac-comphist.dat"))
+    ;(ac-linum-workaround)
+    ;(setq popup-use-optimized-column-computation nil)
+    (unbind-key "C-s" ac-completing-map)))
+
+;;; auctex
+
+(use-package
+  tex-site
+  :mode ("\\.tex\\'" . latex-mode)
+  :config
+  (progn
+    ;;set xetex mode in tex/latex
+    (add-to-list 'ac-modes 'latex-mode)
+    (add-hook
+      'LaTeX-mode-hook
+      (lambda()
+
+	(use-package ac-math)
+	(setq ac-math-unicode-in-math-p t)
+	(nconc ac-sources
+	       '(ac-source-math-unicode ac-source-math-latex
+					ac-source-latex-commands))
+
+	(add-to-list
+	  'TeX-command-list
+	  '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
+
+	(setq TeX-command-default "XeLaTeX"
+	      TeX-auto-save t
+	      TeX-save-query nil
+	      ; TeX-parse-self t
+	      ; TeX-auto-untabify t
+	      ; TeX-global-PDF-mode t
+	      TeX-show-compilation t)
+	))))
+
+;;; yasnippet
+
+(use-package
+  yasnippet
+  :if (not noninteractive)
+  :diminish yas-minor-mode
+  :commands (yas-minor-mode yas-expand)
+  :mode ("/\\.emacs\\.d/snippets/" . snippet-mode)
+  :config
+  (add-to-list 'yas-snippet-dirs emacs-snippets-dir)
+  :init (yas-global-mode t))
+
 ;;; css-mode
 
 (use-package
@@ -274,7 +343,7 @@
 
 (use-package
   yaml-mode
-  :mode ("\\.ya?ml\\'" . yaml-mode))
+  :mode ("\\.yaml\\'" . yaml-mode))
 
 ;;; python-mode
 

@@ -7,7 +7,7 @@
 (when (fboundp 'tool-bar-mode)
   (tool-bar-mode -1))
 
-(menu-bar-mode 0)
+;(menu-bar-mode 0)
 
 ;; Disable Scrollbar
 (set-scroll-bar-mode 'nil)

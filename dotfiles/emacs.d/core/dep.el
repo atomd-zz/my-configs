@@ -29,7 +29,11 @@
     key-chord
     diminish
     powerline
+    ac-math
+    auto-complete
+    fuzzy
     monokai-theme
+    yasnippet
     ;; Need to learn
     ack-and-a-half
     anzu
@@ -52,6 +56,7 @@
     smartparens
     smex
     ;; programming lang
+    auctex
     js2-mode
     csv-mode
     cmake-mode
@@ -61,14 +66,12 @@
     feature-mode
     go-mode
     lua-mode
-    puppet-mode
     pkgbuild-mode
     yaml-mode
     markdown-mode
     textile-mode
     gitconfig-mode
     gitignore-mode
-    auctex
     erlang
     scala-mode2)
   "A list of packages to ensure are installed at launch.")
