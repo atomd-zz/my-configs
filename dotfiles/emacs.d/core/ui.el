@@ -1,6 +1,5 @@
 ;;; ui.el --- UI optimizations and tweaks.
 
-
 (diminish 'global-visual-line-mode)
 (diminish 'visual-line-mode)
 
@@ -42,16 +41,16 @@
 
 ;; mode line settings
 (global-linum-mode t)
-(global-visual-line-mode 1)
+(global-visual-line-mode t)
 (column-number-mode t)
 (size-indication-mode t)
 
 ;; enable y/n answers
 (fset 'yes-or-no-p 'y-or-n-p)
 
-;; use monokai as the default theme
-(load-theme 'monokai t)
-
+;; the default theme
+; (load-theme 'zenburn t)
+(load-theme 'sanityinc-tomorrow-night t)
 
 ;; Set Emacs to start fullscreen
 (defun toggle-fullscreen ()

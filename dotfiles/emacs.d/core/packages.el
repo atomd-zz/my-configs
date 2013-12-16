@@ -41,6 +41,18 @@
   :diminish key-chord-mode
   :init (key-chord-mode t))
 
+;;; yasnippet
+
+(use-package
+  yasnippet
+  :if (not noninteractive)
+  :diminish yas-minor-mode
+  :commands (yas-minor-mode yas-expand)
+  :mode ("/\\.emacs\\.d/snippets/" . snippet-mode)
+  :config
+  (add-to-list 'yas-snippet-dirs emacs-snippets-dir)
+  :init (yas-global-mode t))
+
 ;;; undo-tree
 
 (use-package
@@ -48,6 +60,20 @@
   :diminish undo-tree-mode
   :init (global-undo-tree-mode t)
   :config (key-chord-define-global "uu" 'undo-tree-visualize))
+
+;;; fill-column-indicator
+
+(use-package
+  fill-column-indicator
+  :config
+  (progn
+    (define-globalized-minor-mode global-fci-mode fci-mode 
+                                  (lambda () (fci-mode t)))
+    (setq-default fci-rule-column 80)
+    (setq-default fci-rule-width 2)
+    (setq-default fci-dash-pattern 0.75)
+    (setq-default fci-rule-use-dashes 1)
+    (global-fci-mode t)))
 
 ;;; ibuffer
 
@@ -244,7 +270,7 @@
     (setq ac-quick-help-delay 1.0)
     (setq ac-fuzzy-enable t)
     (setq ac-trigger-commands
-	  (cons 'backward-delete-char-untabify ac-trigger-commands))
+          (cons 'backward-delete-char-untabify ac-trigger-commands))
     (setq ac-comphist-file (concat emacs-savefile-dir "ac-comphist.dat"))
     ;(ac-linum-workaround)
     ;(setq popup-use-optimized-column-computation nil)
@@ -263,36 +289,24 @@
       'LaTeX-mode-hook
       (lambda()
 
-	(use-package ac-math)
-	(setq ac-math-unicode-in-math-p t)
-	(nconc ac-sources
-	       '(ac-source-math-unicode ac-source-math-latex
-					ac-source-latex-commands))
+        (use-package ac-math)
+        (setq ac-math-unicode-in-math-p t)
+        (nconc ac-sources
+               '(ac-source-math-unicode ac-source-math-latex
+                                        ac-source-latex-commands))
 
-	(add-to-list
-	  'TeX-command-list
-	  '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
+        (add-to-list
+          'TeX-command-list
+          '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
 
-	(setq TeX-command-default "XeLaTeX"
-	      TeX-auto-save t
-	      TeX-save-query nil
-	      ; TeX-parse-self t
-	      ; TeX-auto-untabify t
-	      ; TeX-global-PDF-mode t
-	      TeX-show-compilation t)
-	))))
-
-;;; yasnippet
-
-(use-package
-  yasnippet
-  :if (not noninteractive)
-  :diminish yas-minor-mode
-  :commands (yas-minor-mode yas-expand)
-  :mode ("/\\.emacs\\.d/snippets/" . snippet-mode)
-  :config
-  (add-to-list 'yas-snippet-dirs emacs-snippets-dir)
-  :init (yas-global-mode t))
+        (setq TeX-command-default "XeLaTeX"
+              TeX-auto-save t
+              TeX-save-query nil
+              ; TeX-parse-self t
+              ; TeX-auto-untabify t
+              ; TeX-global-PDF-mode t
+              TeX-show-compilation t)
+        ))))
 
 ;;; css-mode
 
@@ -355,11 +369,24 @@
   (progn
     (defvar python-mode-initialized nil)
     (defun my-python-mode-hook ()
-      (message "execute my-python-mode-hook.")
+      (message "Execute my-python-mode-hook.")
+
       (unless python-mode-initialized
         (setq python-mode-initialized t)
+        ))
+    (add-hook 'python-mode-hook 'my-python-mode-hook)))
 
-        (add-hook 'python-mode-hook 'my-python-mode-hook)))))
+;;; elpy
+
+(use-package
+  elpy
+  :init (elpy-enable)
+  :config
+  (progn
+    (elpy-clean-modeline)
+    (elpy-use-ipython)))
+
+;;; end
 
 (provide 'packages)
 ;;; packages.el ends here

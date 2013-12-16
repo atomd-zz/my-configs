@@ -24,10 +24,10 @@
 
 
 ;; the core stuff
+(require 'base)
 (require 'dep)
 (require 'packages)
 
-(require 'base)
 (require 'ui)
 (require 'editor)
 (require 'keybindings)

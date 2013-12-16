@@ -20,60 +20,66 @@
 
 (defvar my-packages
   '(use-package
-    ace-jump-mode
-    dired-single
-    dash
-    ibuffer-vc
-    ibuffer-git
-    undo-tree
-    key-chord
-    diminish
-    powerline
-    ac-math
-    auto-complete
-    fuzzy
-    monokai-theme
-    yasnippet
-    ;; Need to learn
-    ack-and-a-half
-    anzu
-    s
-    helm
-    helm-projectile
-    flx-ido
-    ido-ubiquitous
-    elisp-slime-nav
-    epl
-    expand-region
-    flycheck
-    gist
-    grizzl
-    guru-mode ;;
-    projectile
-    magit
-    move-text
-    rainbow-mode
-    smartparens
-    smex
-    ;; programming lang
-    auctex
-    js2-mode
-    csv-mode
-    cmake-mode
-    log4j-mode
-    css-mode
-    python-mode
-    feature-mode
-    go-mode
-    lua-mode
-    pkgbuild-mode
-    yaml-mode
-    markdown-mode
-    textile-mode
-    gitconfig-mode
-    gitignore-mode
-    erlang
-    scala-mode2)
+     ace-jump-mode
+     dired-single
+     dash
+     ibuffer-vc
+     ibuffer-git
+     undo-tree
+     key-chord
+     diminish
+     powerline
+     ac-math
+     auto-complete
+     fuzzy
+     flycheck
+     elpy
+     ; monokai-theme
+     fill-column-indicator
+     yasnippet
+     ; monokai-theme
+     zenburn-theme
+     solarized-theme
+     color-theme-sanityinc-tomorrow
+     ;; Need to learn
+     ack-and-a-half
+     anzu
+     s
+     helm
+     helm-projectile
+     flx-ido
+     ido-ubiquitous
+     elisp-slime-nav
+     epl
+     expand-region
+     gist
+     grizzl
+     guru-mode ;;
+     projectile
+     magit
+     move-text
+     rainbow-mode
+     smartparens
+     smex
+     ;; programming lang
+     auctex
+     js2-mode
+     csv-mode
+     cmake-mode
+     log4j-mode
+     css-mode
+     python-mode
+     feature-mode
+     go-mode
+     lua-mode
+     pkgbuild-mode
+     yaml-mode
+     markdown-mode
+     textile-mode
+     gitconfig-mode
+     gitignore-mode
+     erlang
+     scala-mode2)
   "A list of packages to ensure are installed at launch.")
 
 ;; Auto Install package
