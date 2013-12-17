@@ -5,6 +5,7 @@
 (use-package
   projectile
   :diminish projectile-mode
+  :ensure t
   :init (projectile-global-mode)
   :config
   (progn
@@ -20,6 +21,7 @@
 (use-package
   anzu
   :diminish anzu-mode
+  :ensure t
   :init (global-anzu-mode t))
 
 ;;; guru
@@ -27,11 +29,13 @@
 (use-package
   guru-mode
   :diminish guru-mode
+  :ensure t
   :init (guru-global-mode t))
 
 ;;; powerline
 (use-package
   powerline
+  :ensure t
   :init (powerline-default-theme))
 
 ;;; key chords
@@ -39,6 +43,7 @@
 (use-package
   key-chord
   :diminish key-chord-mode
+  :ensure t
   :init (key-chord-mode t))
 
 ;;; yasnippet
@@ -46,6 +51,7 @@
 (use-package
   yasnippet
   :if (not noninteractive)
+  :ensure t
   :diminish yas-minor-mode
   :commands (yas-minor-mode yas-expand)
   :mode ("/\\.emacs\\.d/snippets/" . snippet-mode)
@@ -57,6 +63,7 @@
 
 (use-package
   undo-tree
+  :ensure t
   :diminish undo-tree-mode
   :init (global-undo-tree-mode t)
   :config (key-chord-define-global "uu" 'undo-tree-visualize))
@@ -65,6 +72,7 @@
 
 (use-package
   fill-column-indicator
+  :ensure t
   :config
   (progn
     (define-globalized-minor-mode global-fci-mode fci-mode 
@@ -79,11 +87,12 @@
 
 (use-package
   ibuffer
+  :ensure t
   :bind ("C-x C-b" . ibuffer)
   :config
   (progn
     ;; (use-package ibuffer-vc)
-    (use-package ibuffer-git)
+    (use-package ibuffer-git :ensure t)
 
     (setq
       ibuffer-show-empty-filter-groups nil
@@ -191,6 +200,7 @@
 
 (use-package
   ace-jump-mode
+  :ensure t
   :bind
   (("M-j" . ace-jump-mode)
    ("M-h" . ace-jump-mode-pop-mark))
@@ -201,6 +211,7 @@
 ;;; smex
 (use-package
   smex
+  :ensure t
   :bind
   (("M-x" . smex)
    ("M-X" . smex-major-mode-commands))
@@ -214,6 +225,7 @@
 (use-package
   winner
   :diminish winner-mode
+  :ensure t
   :if (not noninteractive)
   :init (winner-mode 1)
   :bind (("M-N" . winner-redo)
@@ -223,6 +235,7 @@
 
 (use-package
   helm-config
+  :ensure helm
   :bind (("C-c M-x" . helm-M-x)
          ("C-h a" . helm-c-apropos)
          ("M-s a" . helm-do-grep)
@@ -233,11 +246,12 @@
 
 (use-package
   ido
+  :ensure t
   :init (ido-mode t)
   :config
   (progn
-    (use-package ido-ubiquitous)
-    (use-package flx-ido)
+    (use-package ido-ubiquitous :ensure t)
+    (use-package flx-ido :ensure t)
     (setq
       ido-enable-prefix nil
       ido-enable-flex-matching t
@@ -256,10 +270,11 @@
 
 (use-package
   auto-complete-config
+  :ensure auto-complete
   :diminish auto-complete-mode
   :init
   (progn
-    (use-package pos-tip)
+    (use-package pos-tip :ensure t)
     (ac-config-default))
   :config
   (progn
@@ -281,6 +296,7 @@
 (use-package
   tex-site
   :mode ("\\.tex\\'" . latex-mode)
+  :ensure auctex
   :config
   (progn
     ;;set xetex mode in tex/latex
@@ -289,7 +305,7 @@
       'LaTeX-mode-hook
       (lambda()
 
-        (use-package ac-math)
+        (use-package ac-math :ensure t)
         (setq ac-math-unicode-in-math-p t)
         (nconc ac-sources
                '(ac-source-math-unicode ac-source-math-latex
@@ -312,32 +328,29 @@
 
 (use-package
   css-mode
+  :ensure t
   :mode ("\\.css\\'" . css-mode))
 
 ;;; js2-mode
 
 (use-package
   js2-mode
+  :ensure t
   :mode ("\\.js\\'" . js2-mode))
 
 ;;; cmake-mode
 
 (use-package
   cmake-mode
+  :ensure t
   :mode (("CMakeLists\\.txt\\'" . cmake-mode)
          ("\\.cmake\\'"         . cmake-mode)))
-
-;;; log4j-mode
-
-(use-package
-  log4j-mode
-  :disabled t
-  :mode ("\\.log\\'" . log4j-mode))
 
 ;;; lua-mode
 
 (use-package
   lua-mode
+  :ensure t
   :mode ("\\.lua\\'" . lua-mode)
   :interpreter ("lua" . lua-mode))
 
@@ -345,46 +358,57 @@
 
 (use-package
   markdown-mode
+  :ensure t
   :mode ("\\.md\\'" . markdown-mode))
 
 ;;; puppet-mode
 
 (use-package
   puppet-mode
+  :ensure t
   :mode ("\\.pp\\'" . puppet-mode))
 
 ;;; yaml-mode
 
 (use-package
   yaml-mode
+  :ensure t
   :mode ("\\.yaml\\'" . yaml-mode))
 
 ;;; python-mode
 
 (use-package
   python-mode
+  :ensure t
   :mode ("\\.py\\'" . python-mode)
   :interpreter ("python" . python-mode)
   :config
   (progn
+    ; use IPython
+    (setq-default py-shell-name "ipython")
+    (setq-default py-which-bufname "IPython")
+    (setq py-python-command-args '("--gui=wx" "--pylab=wx" "-colors" "Linux"))
+    (setq py-force-py-shell-name-p t)
+    (setq py-shell-switch-buffers-on-execute-p t)
+    (setq py-switch-buffers-on-execute-p t)
+    (setq py-split-windows-on-execute-p nil)
+    (setq py-smart-indentation t)
+
     (defvar python-mode-initialized nil)
     (defun my-python-mode-hook ()
       (message "Execute my-python-mode-hook.")
 
       (unless python-mode-initialized
-        (setq python-mode-initialized t)
-        ))
+        (setq python-mode-initialized t)))
+
     (add-hook 'python-mode-hook 'my-python-mode-hook)))
 
-;;; elpy
+;;; themes
 
-(use-package
-  elpy
-  :init (elpy-enable)
-  :config
-  (progn
-    (elpy-clean-modeline)
-    (elpy-use-ipython)))
+(use-package color-theme-sanityinc-tomorrow :ensure t)
+(use-package zenburn-theme :ensure t :disabled t)
+(use-package solarized-theme :ensure t :disabled t)
+
 
 ;;; end
 

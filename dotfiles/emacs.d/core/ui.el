@@ -12,7 +12,7 @@
 (set-scroll-bar-mode 'nil)
 
 ;; Don't use OSX Native fullscreen mode
-(setq ns-use-native-fullscreen nil)
+;(setq ns-use-native-fullscreen nil)
 
 ;; the blinking cursor is nothing, but an annoyance
 (blink-cursor-mode -1)
