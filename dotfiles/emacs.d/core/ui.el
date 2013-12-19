@@ -1,5 +1,7 @@
 ;;; ui.el --- UI optimizations and tweaks.
 
+(require 'cl)
+
 (diminish 'global-visual-line-mode)
 (diminish 'visual-line-mode)
 
@@ -23,16 +25,16 @@
 ;; Customize line numbers
 (setq linum-format 'dynamic)
 (add-hook 'linum-before-numbering-hook
-  (lambda ()
-    (unless (display-graphic-p)
-        (setq linum-format
-          (lambda (line)
-          (propertize
-            (format
-            (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
-            (concat "%" (number-to-string w) "d ")) line)
-            'face
-            'linum))))))
+          (lambda ()
+            (unless (display-graphic-p)
+              (setq linum-format
+                    (lambda (line)
+                      (propertize
+                        (format
+                          (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
+                            (concat "%" (number-to-string w) "d ")) line)
+                        'face
+                        'linum))))))
 
 ;; nice scrolling
 (setq scroll-margin 0
@@ -45,22 +47,10 @@
 (column-number-mode t)
 (size-indication-mode t)
 
-;; enable y/n answers
-(fset 'yes-or-no-p 'y-or-n-p)
+;;; the default theme
 
-;; the default theme
 ; (load-theme 'zenburn t)
 (load-theme 'sanityinc-tomorrow-night t)
-
-;; Set Emacs to start fullscreen
-(defun toggle-fullscreen ()
-  (interactive)
-  (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
-                 '(2 "_NET_WM_STATE_MAXIMIZED_VERT" 0))
-  (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
-                 '(2 "_NET_WM_STATE_MAXIMIZED_HORZ" 0))
-)
-(toggle-fullscreen)
 
 (provide 'ui)
 ;;; ui.el ends here

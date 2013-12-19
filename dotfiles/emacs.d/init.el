@@ -25,9 +25,10 @@
 
 ;; the core stuff
 (require 'base)
-(require 'dep)
 (require 'packages)
+(require 'modes)
 
 (require 'ui)
 (require 'editor)
-(require 'keybindings)
+(require 'fonts)
+(require 'kdbs)
