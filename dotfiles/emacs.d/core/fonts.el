@@ -2,13 +2,15 @@
 
 (defconst
   my-ascii-font-candidates
-  '("DejaVu Sans Mono" "Cousine" "Consolas" "WenQuanYi Micro Hei Mono"))
+  '("WenQuanYi Micro Hei Mono" "DejaVu Sans Mono" "Cousine" "Consolas"))
 
 (defconst
   my-non-ascii-font-candidates
-  '("文泉驿等宽微米黑" "WenQuanYi Micro Hei Mono" "Microsoft YaHei" "MS Gothic"))
+  '("WenQuanYi Micro Hei Mono" "Microsoft YaHei" "MS Gothic"))
 
-(defconst my-font-size 15)
+(setq face-font-rescale-alist '(("Microsoft Yahei" . 1.2) ("WenQuanYi Micro Hei Mono" . 1.2)))
+
+(defconst my-font-size 14)
 
 ;;; http://netlab.cse.yzu.edu.tw/~statue/freebsd/zh-tut/xlfd.html
 (defun font-existp (font-name)
@@ -27,7 +29,6 @@
                 "-*-*-*-*-" (number-to-string my-font-size)
                 "-*-*-*-*-0-fontset-myfontset")))
         (message "Font Spec: %s" font-spec)
-        (setq non-ascii-fontc (font-spec :family non-ascii-font :size 15))
         (create-fontset-from-fontset-spec font-spec)
         (dolist (charset '(kana han symbol cjk-misc bopomofo))
           (set-fontset-font "fontset-myfontset" charset non-ascii-font))
