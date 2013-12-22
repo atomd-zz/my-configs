@@ -1,4 +1,4 @@
-; editor.el --- Enhanced editing experience.
+;;; editor.el --- Enhanced editing experience.
 
 ;; highlight the current line
 (global-hl-line-mode +1)

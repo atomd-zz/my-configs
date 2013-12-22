@@ -1,6 +1,7 @@
-;;; keybindings.el --- Some useful keybindings.
+;;; kbds.el --- Some useful keybindings.
 
 (global-set-key (kbd "M-g") 'goto-line)
-(global-set-key (kbd "C-SPC") nil)
+(global-set-key (kbd "M-m") 'set-mark-command)
+
 (provide 'kdbs)
-;;; keybindings.el ends here
+;;; kbds.el ends here

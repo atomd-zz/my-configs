@@ -1,13 +1,12 @@
-;; base.el --- Default package selection.
+;;; base.el --- Default package selection.
 
 (setq user-name "atomd")
 
 (cd "~")
 
-(defvar emacs-savefile-dir (expand-file-name "savefile/" emacs-home-dir)
-  "This folder stores all the automatically generated save/history-files.")
-(defvar emacs-snippets-dir (expand-file-name "snippets/" emacs-home-dir)
-  "This folder stores all the snippets files.")
+(defvar emacs-savefile-dir (expand-file-name "savefile/" emacs-home-dir))
+(defvar emacs-snippets-dir (expand-file-name "snippets/" emacs-home-dir))
+(defvar emacs-packages-dir (expand-file-name "packages/" emacs-home-dir))
 
 (defconst emacs-start-time (current-time))
 
@@ -23,6 +22,8 @@
   (make-directory emacs-savefile-dir))
 (unless (file-exists-p emacs-snippets-dir)
   (make-directory emacs-snippets-dir))
+(unless (file-exists-p emacs-packages-dir)
+  (make-directory emacs-packages-dir))
 (unless (file-exists-p pcache-directory)
   (make-directory pcache-directory))
 
@@ -44,8 +45,8 @@
   (set-default-coding-systems 'utf-8)
   (set-terminal-coding-system 'utf-8)
   (unless (eq system-type 'windows-nt)
-   (set-selection-coding-system 'utf-8))
+    (set-selection-coding-system 'utf-8))
   (prefer-coding-system 'utf-8))
 
 (provide 'base)
-;; base.el ends here
+;;; base.el ends here

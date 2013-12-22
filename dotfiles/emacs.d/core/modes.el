@@ -1,4 +1,4 @@
-;;; packages.el --- Emacs minor mode
+;;; modes.el --- Emacs minor mode
 
 ;;; projectile
 
@@ -9,8 +9,8 @@
   :init (projectile-global-mode)
   :config
   (progn
-    ;; (setq projectile-enable-caching t)
     ;; (setq projectile-require-project-root nil)
+    (setq projectile-enable-caching t)
     (setq
       projectile-completion-system 'grizzl
       projectile-cache-file (expand-file-name  "projectile.cache" emacs-savefile-dir)
@@ -53,11 +53,10 @@
   :if (not noninteractive)
   :ensure t
   :diminish yas-minor-mode
+  :init (yas-global-mode t)
   :commands (yas-minor-mode yas-expand)
   :mode ("/\\.emacs\\.d/snippets/" . snippet-mode)
-  :config
-  (add-to-list 'yas-snippet-dirs emacs-snippets-dir)
-  :init (yas-global-mode t))
+  :config (add-to-list 'yas-snippet-dirs emacs-snippets-dir))
 
 ;;; undo-tree
 
@@ -65,9 +64,8 @@
   undo-tree
   :ensure t
   :diminish undo-tree-mode
-  :init (global-undo-tree-mode t)
   ;:config (key-chord-define-global "uu" 'undo-tree-visualize)
-  )
+  :init (global-undo-tree-mode t))
 
 ;;; fill-column-indicator
 
@@ -76,8 +74,9 @@
   :ensure t
   :config
   (progn
-    (define-globalized-minor-mode global-fci-mode fci-mode 
-                                  (lambda () (fci-mode t)))
+    (define-globalized-minor-mode
+      global-fci-mode fci-mode 
+      (lambda () (fci-mode t)))
     (setq-default fci-rule-column 80)
     (setq-default fci-rule-width 2)
     (setq-default fci-dash-pattern 0.75)
@@ -94,7 +93,6 @@
   (progn
     (use-package ibuffer-vc :ensure t)
     (use-package ibuffer-git :ensure t)
-
     (setq
       ibuffer-show-empty-filter-groups nil
       ibuffer-marked-char ?✓)
@@ -221,7 +219,15 @@
     (setq smex-save-file (expand-file-name ".smex.items" emacs-savefile-dir))
     (smex-initialize)))
 
+;;; window-numbering
+
+(use-package
+  window-numbering
+  :ensure t
+  :init (window-numbering-mode t))
+
 ;;; maxframe
+
 (use-package
   maxframe
   :ensure t
@@ -250,7 +256,8 @@
 (use-package
   helm-config
   :ensure helm
-  :bind (("C-c M-x" . helm-M-x)
+  :bind (("C-c h" . helm-mini)
+         ("C-c M-x" . helm-M-x)
          ("C-h a" . helm-c-apropos)
          ("M-s a" . helm-do-grep)
          ("M-s b" . helm-occur)
@@ -278,7 +285,6 @@
       ido-use-faces nil)
     (ido-ubiquitous-mode t)
     (flx-ido-mode t)))
-
 
 ;;; auto-complete
 
@@ -337,6 +343,24 @@
               ; TeX-global-PDF-mode t
               TeX-show-compilation t)
         ))))
+
+;;; douban-music-mode
+
+(use-package douban-music-mode :commands douban-music)
+
+;;; ibus-mode
+
+(use-package
+  ibus
+  :init (add-hook 'after-init-hook 'ibus-mode-on)
+  :config
+  (progn
+    (setq ibus-agent-file-name (expand-file-name "ibus/ibus-el-agent" emacs-packages-dir))
+    ;; Use C-/ for Undo command
+    (ibus-define-common-key ?\C-/ nil)
+    (global-unset-key (kbd "C-SPC"))
+    (global-set-key (kbd "C-SPC") 'ibus-toggle)
+    (setq ibus-cursor-color '("#d28445" "#6a9fb5" "#90a959"))))
 
 ;;; css-mode
 
@@ -418,10 +442,10 @@
     (add-hook 'python-mode-hook 'my-python-mode-hook)))
 
 ;;; scala-mode
+
 (use-package
   ensime
   :ensure t
-  :requires scala-mode2
   :load-path "ensime/src/main/elisp/"
   :pre-load (key-chord-define-global ".." 'ensime-expand-selection-command)
   :init (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
@@ -434,18 +458,7 @@
 (use-package solarized-theme :ensure t :disabled t)
 (use-package color-theme-sanityinc-tomorrow :ensure t)
 
-;;; douban-music-mode
-(use-package
-  douban-music-mode
-  :pre-load
-  (progn
-    (install-from-url
-      'douban-music-mode
-      "https://raw.github.com/zhengyuli/DoubanMusic/master/douban-music-mode.el")
-    (defvar douban-music-cache-directory
-      (expand-file-name "douban-music" emacs-savefile-dir))))
-
 ;;; end
 
 (provide 'modes)
-;;; packages.el ends here
+;;; modes.el ends here
