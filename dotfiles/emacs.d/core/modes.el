@@ -64,7 +64,6 @@
   undo-tree
   :ensure t
   :diminish undo-tree-mode
-  ;:config (key-chord-define-global "uu" 'undo-tree-visualize)
   :init (global-undo-tree-mode t))
 
 ;;; fill-column-indicator
@@ -75,13 +74,34 @@
   :config
   (progn
     (define-globalized-minor-mode
-      global-fci-mode fci-mode 
+      global-fci-mode fci-mode
       (lambda () (fci-mode t)))
     (setq-default fci-rule-column 80)
     (setq-default fci-rule-width 2)
     (setq-default fci-dash-pattern 0.75)
     (setq-default fci-rule-use-dashes 1)
     (global-fci-mode t)))
+
+;;; quickrun
+
+(use-package
+  quickrun
+  :ensure t
+  :bind ("C-c r" . quickrun))
+
+;;; eshell
+
+(use-package
+  eshell
+  :pre-load (setq eshell-directory-name (expand-file-name "eshell" emacs-savefile-dir))
+  :config
+  (progn
+    (defun eshell/clear ()
+      "04Dec2001 - sailor, to clear the eshell buffer."
+      (interactive)
+      (let ((inhibit-read-only t))
+        (erase-buffer)))
+    ))
 
 ;;; ibuffer
 

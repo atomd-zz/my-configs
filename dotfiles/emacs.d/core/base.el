@@ -14,6 +14,7 @@
 (setq message-log-max 16384)
 (setq auto-save-list-file-prefix emacs-savefile-dir)
 (setq pcache-directory (expand-file-name "pcache/" emacs-savefile-dir))
+(setq url-configuration-directory (expand-file-name "url" emacs-savefile-dir))
 
 ;; enable y/n answers
 (fset 'yes-or-no-p 'y-or-n-p)
