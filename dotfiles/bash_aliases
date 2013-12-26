@@ -7,4 +7,9 @@ alias la="ls -alF --color=auto"
 alias ls="ls --color=auto"
 
 alias grep="grep --color=auto"
+
+alias em='emacsclient -nc -a "" -F "((fullscreen . maximized))"'
+alias emc='emacsclient -t -a ""'
+
+# EDITOR='emacsclient -a ""'
 # alias tmux="tmux -2"

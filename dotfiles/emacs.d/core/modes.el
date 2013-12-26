@@ -117,7 +117,7 @@
       ibuffer-show-empty-filter-groups nil
       ibuffer-marked-char ?✓)
 
-    (defvar my-ibuffer-filter-groups
+    (defvar ff/ibuffer-filter-groups
       `(
         ("Terminals" (mode . term-mode))
         ("emacs.d" (filename . ,(expand-file-name "~/.emacs.d/")))
@@ -147,7 +147,7 @@
       "My custom pre-set groups for ibuffer.")
 
     ;; Clean automatically created buffers
-    (defun my-ibuffer-clean ()
+    (defun ff/ibuffer-clean ()
       "Clean automatically created buffers"
       (interactive)
       (ibuffer-unmark-all ?*)
@@ -167,9 +167,9 @@
       (ibuffer-mark-by-name-regexp "*vc-diff*")
       (ibuffer-do-delete))
 
-    (defun my-ibuffer-filter-groups ()
+    (defun ff/ibuffer-filter-groups ()
       "Generate my very own grouping of buffers. Just for fun."
-      (append my-ibuffer-filter-groups (ibuffer-vc-generate-filter-groups-by-vc-root)))
+      (append ff/ibuffer-filter-groups (ibuffer-vc-generate-filter-groups-by-vc-root)))
 
     (define-ibuffer-column
       size-h
@@ -186,10 +186,10 @@
                  (ibuffer-jump-to-buffer recent-buffer-name)))
     (ad-activate 'ibuffer)
 
-    (defun my-ibuffer-hook ()
+    (defun ff/ibuffer-hook ()
       (interactive)
       (ibuffer-do-sort-by-vc-status)
-      (setq ibuffer-filter-groups (my-ibuffer-filter-groups))
+      (setq ibuffer-filter-groups (ff/ibuffer-filter-groups))
       (setq ibuffer-formats
             '((mark modified read-only " "
                     (name 18 18 :left :elide)
@@ -211,8 +211,8 @@
                     " " filename-and-process)))
       (ibuffer-update nil t))
 
-    (add-hook 'ibuffer-hook #'my-ibuffer-hook)
-    (define-key ibuffer-mode-map (kbd "M-D") 'my-ibuffer-clean)
+    (add-hook 'ibuffer-hook #'ff/ibuffer-hook)
+    (define-key ibuffer-mode-map (kbd "M-D") 'ff/ibuffer-clean)
     (define-key ibuffer-mode-map [?s ?v] #'ibuffer-do-sort-by-vc-status)))
 
 ;;; ace-jump-mode
@@ -453,13 +453,13 @@
     (setq py-smart-indentation t)
 
     (defvar python-mode-initialized nil)
-    (defun my-python-mode-hook ()
-      (message "Execute my-python-mode-hook.")
+    (defun ff/python-mode-hook ()
+      (message "Execute ff/python-mode-hook.")
 
       (unless python-mode-initialized
         (setq python-mode-initialized t)))
 
-    (add-hook 'python-mode-hook 'my-python-mode-hook)))
+    (add-hook 'python-mode-hook 'ff/python-mode-hook)))
 
 ;;; scala-mode
 

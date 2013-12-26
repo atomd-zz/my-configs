@@ -1,5 +1,7 @@
 ;;; base.el --- Default package selection.
 
+(require 'server)
+
 (setq user-name "atomd")
 
 (cd "~")
@@ -48,6 +50,9 @@
   (unless (eq system-type 'windows-nt)
     (set-selection-coding-system 'utf-8))
   (prefer-coding-system 'utf-8))
+
+;;; server
+(unless (server-running-p) (server-start))
 
 (provide 'base)
 ;;; base.el ends here

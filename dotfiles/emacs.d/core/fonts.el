@@ -45,21 +45,21 @@
                         charset
                         zh-font))))
 
-(defun my-set-cjk-font ()
+(defun ff/set-cjk-font ()
   "set the fonts for cjk"
   (set-cjk-font
     '("Ubuntu Mono") ":pixelsize=16"
     '("WenQuanYi Zen Hei Mono")))
 
-(defun my-set-frame-font(&optional frame)
+(defun ff/set-frame-font(&optional frame)
   "set the frame fonts"
   (when (eq 'x (window-system frame))
     (select-frame frame)
-    (my-set-cjk-font)))
+    (ff/set-cjk-font)))
 
-(add-hook 'after-make-frame-functions 'my-set-frame-font)
+(add-hook 'after-make-frame-functions 'ff/set-frame-font)
 (if (display-graphic-p)
-  (my-set-cjk-font))
+  (ff/set-cjk-font))
 
 (provide 'fonts)
 ;;; fonts.el ends here
