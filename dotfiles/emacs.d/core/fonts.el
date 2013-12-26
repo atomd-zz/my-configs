@@ -48,7 +48,7 @@
 (defun my-set-cjk-font ()
   "set the fonts for cjk"
   (set-cjk-font
-    '("Ubuntu Mono") ":pixelsize=18"
+    '("Ubuntu Mono") ":pixelsize=16"
     '("WenQuanYi Zen Hei Mono")))
 
 (defun my-set-frame-font(&optional frame)
