@@ -4,89 +4,25 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # ZSH_THEME="af-magic"
 # ZSH_THEME="dpoggi"
-# ZSH_THEME="fishy"
+ZSH_THEME="seeker"
 
 # Set to this to use case-sensitive completion
 CASE_SENSITIVE="true"
 
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-plugins=(pip fabric redis-cli)
+plugins=(git vagrant scala sbt python pip tmux colored-man common-aliases cp sudo zsh-syntax-highlighting z bundler)
 
 source $ZSH/oh-my-zsh.sh
 
 # Customize
 unsetopt correct_all
 
-# Set env term
-local256="$COLORTERM$XTERM_VERSION$ROXTERM_ID$KONSOLE_DBUS_SESSION"
-if [ -n "$local256" ]; then
-  case "$TERM" in
-    'xterm') TERM=xterm-256color;;
-    'screen') TERM=screen-256color;;
-    'Eterm') TERM=Eterm-256color;;
-  esac
-  export TERM
-
-  if [ -n "$TERMCAP" ] && [ "$TERM" = "screen-256color" ]; then
-    TERMCAP=$(echo "$TERMCAP" | sed -e 's/Co#8/Co#256/g')
-    export TERMCAP
-  fi
-fi
-unset local256
-
-
-eval turquoise="$fg[cyan]"
-eval orange="$fg[yellow]"
-eval purple="$fg[magenta]"
-eval hotpink="$fg[red]"
-eval limegreen="$fg[green]"
-eval my_gray='$FG[237]'
-
-_collapsed_wd() {
-  echo $(pwd | perl -pe "s|^$HOME|~|g; s|/([^/])[^/]*(?=/)|/\$1|g")
-}
-
-if [[ "$TERM" != "dumb" ]] && [[ "$DISABLE_LS_COLORS" != "true" ]]; then
-
-  MODE_INDICATOR="%{$fg_bold[red]%}❮%{$reset_color%}%{$fg[red]%}❮❮%{$reset_color%}"
-  local return_status="%{$fg[red]%}%(?..⏎)%{$reset_color%}"
-
-  PROMPT='%{$purple%}%n%{$reset_color%}@%{$orange%}%M %{$turquoise%}$(_collapsed_wd)$(git_prompt_info) %(!.%{$hotpink%}#.%{$limegreen%}»)%{$reset_color%} '
-  ZSH_THEME_GIT_PROMPT_PREFIX=" %{$fg[blue]%}git%{$reset_color%}:%{$hotpink%}"
-  ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
-  ZSH_THEME_GIT_PROMPT_DIRTY=""
-  ZSH_THEME_GIT_PROMPT_CLEAN=""
-
-  RPROMPT='${return_status}$(git_prompt_status)%{$reset_color%}'
-
-  ZSH_THEME_GIT_PROMPT_ADDED="%{$limegreen%} ✚"
-  ZSH_THEME_GIT_PROMPT_MODIFIED="%{$fg[blue]%} ✹"
-  ZSH_THEME_GIT_PROMPT_DELETED="%{$hotpink%} ✖"
-  ZSH_THEME_GIT_PROMPT_RENAMED="%{$fg[magenta]%} ➜"
-  ZSH_THEME_GIT_PROMPT_UNMERGED="%{$orange%} ═"
-  ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$turquoise%} ✭"
-else
-  MODE_INDICATOR="❮❮❮"
-  local return_status="%(?::⏎)"
-
-  PROMPT='%c$(git_prompt_info) %(!.#.❯) '
-
-  ZSH_THEME_GIT_PROMPT_PREFIX=" git:"
-  ZSH_THEME_GIT_PROMPT_SUFFIX=""
-  ZSH_THEME_GIT_PROMPT_DIRTY=""
-  ZSH_THEME_GIT_PROMPT_CLEAN=""
-
-  RPROMPT='${return_status}$(git_prompt_status)'
-
-  ZSH_THEME_GIT_PROMPT_ADDED=" ✚"
-  ZSH_THEME_GIT_PROMPT_MODIFIED=" ✹"
-  ZSH_THEME_GIT_PROMPT_DELETED=" ✖"
-  ZSH_THEME_GIT_PROMPT_RENAMED=" ➜"
-  ZSH_THEME_GIT_PROMPT_UNMERGED=" ═"
-  ZSH_THEME_GIT_PROMPT_UNTRACKED=" ✭"
-fi
-
 # Aliases
 if [ -f ~/.bash_aliases ]; then
     source ~/.bash_aliases
+fi
+
+# Profile
+if [ -f ~/.bash_profile ]; then
+    source ~/.bash_profile
 fi

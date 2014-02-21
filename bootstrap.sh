@@ -65,8 +65,8 @@ link hgrc
 echo "init zsh ..."
 link zshrc
 
-echo "init xmodmap ..."
-link Xmodmap
+# echo "init xmodmap ..."
+# link Xmodmap
 
 echo "init bash_aliases ..."
 link bash_aliases
@@ -83,11 +83,11 @@ if which pip > /dev/null; then
 else
     sudo apt-get install python-pip python-dev build-essential
     sudo pip install --upgrade pip
-    sudo pip install --upgrade virtualenv
 fi
 
 if which virtualenv > /dev/null; then
     echo "virtualenv has already installed"
+    sudo pip install --upgrade virtualenv
 else
     sudo pip install virtualenv
 fi
