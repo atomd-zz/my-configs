@@ -2,39 +2,22 @@
 
 (require 'cl)
 
-(diminish 'global-visual-line-mode)
-(diminish 'visual-line-mode)
-
 (when (fboundp 'tool-bar-mode)
   (tool-bar-mode -1))
 
-;(menu-bar-mode 0)
+;; hl-line: highlight the current line
+(global-hl-line-mode t)
 
 ;; Disable Scrollbar
 (set-scroll-bar-mode 'nil)
 
-;; Don't use OSX Native fullscreen mode
-;(setq ns-use-native-fullscreen nil)
-
-;; the blinking cursor is nothing, but an annoyance
-(blink-cursor-mode -1)
+(when window-system
+  (setq frame-title-format '(buffer-file-name "%f" ("%b")))
+  (tooltip-mode -1)
+  (blink-cursor-mode -1))
 
 ;; disable startup screen
 (setq inhibit-startup-screen t)
-
-;; Customize line numbers
-(setq linum-format 'dynamic)
-(add-hook 'linum-before-numbering-hook
-          (lambda ()
-            (unless (display-graphic-p)
-              (setq linum-format
-                    (lambda (line)
-                      (propertize
-                        (format
-                          (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
-                            (concat "%" (number-to-string w) "d ")) line)
-                        'face
-                        'linum))))))
 
 ;; nice scrolling
 (setq scroll-margin 0
@@ -42,15 +25,58 @@
       scroll-preserve-screen-position 1)
 
 ;; mode line settings
-(global-linum-mode t)
-(global-visual-line-mode t)
 (column-number-mode t)
 (size-indication-mode t)
+(diminish 'visual-line-mode)
 
-;;; the default theme
+;; Run at full power please
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
 
-; (load-theme 'zenburn t)
-(load-theme 'sanityinc-tomorrow-night t)
+;;; powerline
+
+(use-package
+  powerline
+  :disabled t  ;; disable
+  :ensure t
+  :init (powerline-default-theme))
+
+;;; themes
+
+(use-package
+  zenburn-theme
+  :disabled t  ;; disable
+  :ensure t
+  :init
+  (load-theme 'zenburn t))
+
+(use-package
+  color-theme-sanityinc-tomorrow
+  :ensure t
+  :init (load-theme 'sanityinc-tomorrow-night t))
+
+(use-package
+ monokai-theme
+  :disabled t  ;; disable
+ :ensure t
+ :init (load-theme 'monokai t))
+
+(use-package
+  sublime-themes
+  :disabled t  ;; disable
+  :ensure t
+  :init
+  ;  (load-theme 'hickey t)
+  ;  (load-theme 'brin t)
+  ;  (load-theme 'dorsey t)
+  ;  (load-theme 'fogus t)
+  ;  (load-theme 'graham  t)
+  ;  (load-theme 'granger t)
+  (load-theme 'junio t)
+  ;  (load-theme 'spolsky t)
+  ;  (load-theme 'wilson t)
+  )
 
 (provide 'ui)
 ;;; ui.el ends here

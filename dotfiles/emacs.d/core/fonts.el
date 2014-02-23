@@ -5,6 +5,8 @@
 ;;   (set-fontset-font "fontset-default"
 ;;                     charset
 ;;                     '("WenQuanYi Zen Hei" . "unicode-bmp")))
+;;                     ;'("Ubuntu Mono") ":pixelsize=16"
+;;                     ;'("WenQuanYi Zen Hei Mono")))
 
 (defun font-exists-p (font)
   (if (null (x-list-fonts font))
@@ -48,8 +50,9 @@
 (defun ff/set-cjk-font ()
   "set the fonts for cjk"
   (set-cjk-font
-    '("Ubuntu Mono") ":pixelsize=16"
-    '("WenQuanYi Zen Hei Mono")))
+   '("Monaco") 14
+   '("Hiragino Sans GB") 16))
+
 
 (defun ff/set-frame-font(&optional frame)
   "set the frame fonts"

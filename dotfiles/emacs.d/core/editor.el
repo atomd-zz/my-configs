@@ -1,7 +1,8 @@
 ;;; editor.el --- Enhanced editing experience.
 
-;; highlight the current line
-(global-hl-line-mode +1)
+;; highlight matching parentheses when the point is on them.
+(show-paren-mode t)
+
 (transient-mark-mode t)
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)

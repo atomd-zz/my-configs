@@ -4,8 +4,6 @@
 (defvar emacs-core-dir (expand-file-name "core/" emacs-home-dir))
 (add-to-list 'load-path emacs-core-dir)
 
-(setq custom-file (expand-file-name "custom.el" emacs-home-dir))
-(load custom-file)
 
 ;; the core stuff
 (require 'base)

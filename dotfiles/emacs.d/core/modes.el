@@ -13,8 +13,22 @@
     (setq projectile-enable-caching t)
     (setq
       projectile-completion-system 'grizzl
-      projectile-cache-file (expand-file-name  "projectile.cache" emacs-savefile-dir)
-      projectile-known-projects-file (expand-file-name  "projectile.bookmarks" emacs-savefile-dir))))
+      projectile-cache-file (expand-file-name  "cache" projectile-directory)
+      projectile-known-projects-file (expand-file-name  "bookmarks" projectile-directory))))
+
+;;; Customize line numbers
+
+(use-package
+  nlinum
+  :ensure t
+  :init
+  (progn
+    (global-nlinum-mode t)
+    (setq nlinum-format-function
+          (lambda (line)
+            (let* ((fmt (format " %%%dd " (- nlinum--width 2)))
+                   (str (propertize (format fmt line) 'face 'linum)))
+              str)))))
 
 ;;; anzu
 
@@ -31,12 +45,6 @@
   :diminish guru-mode
   :ensure t
   :init (guru-global-mode t))
-
-;;; powerline
-(use-package
-  powerline
-  :ensure t
-  :init (powerline-default-theme))
 
 ;;; key chords
 
@@ -58,6 +66,13 @@
   :mode ("/\\.emacs\\.d/snippets/" . snippet-mode)
   :config (add-to-list 'yas-snippet-dirs emacs-snippets-dir))
 
+;;; expand-region
+
+(use-package
+  expand-region
+  :ensure t
+  :bind ("C-=" . er/expand-region))
+
 ;;; undo-tree
 
 (use-package
@@ -66,21 +81,6 @@
   :diminish undo-tree-mode
   :init (global-undo-tree-mode t))
 
-;;; fill-column-indicator
-
-(use-package
-  fill-column-indicator
-  :ensure t
-  :config
-  (progn
-    (define-globalized-minor-mode
-      global-fci-mode fci-mode
-      (lambda () (fci-mode t)))
-    (setq-default fci-rule-column 80)
-    (setq-default fci-rule-width 2)
-    (setq-default fci-dash-pattern 0.75)
-    (setq-default fci-rule-use-dashes 1)
-    (global-fci-mode t)))
 
 ;;; quickrun
 
@@ -93,15 +93,13 @@
 
 (use-package
   eshell
-  :pre-load (setq eshell-directory-name (expand-file-name "eshell" emacs-savefile-dir))
+  :pre-load (setq eshell-directory-name eshell-directory)
   :config
   (progn
     (defun eshell/clear ()
-      "04Dec2001 - sailor, to clear the eshell buffer."
       (interactive)
       (let ((inhibit-read-only t))
-        (erase-buffer)))
-    ))
+        (erase-buffer)))))
 
 ;;; ibuffer
 
@@ -120,7 +118,7 @@
     (defvar ff/ibuffer-filter-groups
       `(
         ("Terminals" (mode . term-mode))
-        ("emacs.d" (filename . ,(expand-file-name "~/.emacs.d/")))
+        ("emacs.d" (filename . ,(expand-file-name emacs-home-dir)))
         ("Help" (or (mode . Man-mode)
                     (mode . woman-mode)
                     (mode . Info-mode)
@@ -228,6 +226,8 @@
     (eval-after-load "ace-jump-mode" '(ace-jump-mode-enable-mark-sync))))
 
 ;;; smex
+;;; M-x interface with Ido-style fuzzy matching
+
 (use-package
   smex
   :ensure t
@@ -236,7 +236,7 @@
    ("M-X" . smex-major-mode-commands))
   :config
   (progn
-    (setq smex-save-file (expand-file-name ".smex.items" emacs-savefile-dir))
+    (setq smex-save-file (expand-file-name "save-items" smex-directory))
     (smex-initialize)))
 
 ;;; window-numbering
@@ -251,14 +251,30 @@
 (use-package
   maxframe
   :ensure t
+  ;; config (setq mf-offset-x 50)
   :init (add-hook 'window-setup-hook 'maximize-frame t))
 
 ;;; mic-paren
 
 (use-package
   mic-paren
+  :disabled t
   :ensure t
   :init (paren-activate))
+
+;;; smartparens
+
+(use-package
+  smartparens-config
+  :ensure smartparens
+  :init (smartparens-global-mode t))
+
+;;; rainbow-delimiters
+
+(use-package
+  rainbow-delimiters
+  :ensure t
+  :init (global-rainbow-delimiters-mode))
 
 ;;; winner
 
@@ -288,23 +304,43 @@
 (use-package
   ido
   :ensure t
-  :init (ido-mode t)
   :config
   (progn
-    (use-package ido-ubiquitous :ensure t)
-    (use-package flx-ido :ensure t)
+    (ido-mode t)
+    (ido-everywhere 1)
+
+    (use-package
+      ido-ubiquitous
+      :ensure t
+      :config (ido-ubiquitous-mode t))
+    ;; try out flx-ido for better flex matching between words
+    (use-package flx-ido
+                 :ensure t
+                 :config
+                 (progn
+                   (flx-ido-mode 1)
+                   (setq ido-use-faces nil)))
+
+    ;; flx-ido looks better with ido-vertical-mode
+    (use-package ido-vertical-mode
+                 :ensure t
+                 :config (ido-vertical-mode))
+
+    ;; ido at point
+    (use-package ido-at-point
+                 :ensure t
+                 :config (ido-at-point-mode))
+
     (setq
       ido-enable-prefix nil
       ido-enable-flex-matching t
-      ido-create-new-buffer 'always
-      ido-use-filename-at-point 'guess
-      ido-max-prospects 10
-      ido-save-directory-list-file (expand-file-name ".ido.history" emacs-savefile-dir)
-      ido-default-file-method 'selected-window
+      ido-case-fold nil
       ido-auto-merge-work-directories-length -1
-      ido-use-faces nil)
-    (ido-ubiquitous-mode t)
-    (flx-ido-mode t)))
+      ido-create-new-buffer 'always
+      ido-use-filename-at-point nil
+      ;ido-use-filename-at-point 'guess
+      ido-save-directory-list-file (expand-file-name "history" ido-directory)
+      ido-max-prospects 10)))
 
 ;;; auto-complete
 
@@ -326,7 +362,7 @@
     (setq ac-fuzzy-enable t)
     (setq ac-trigger-commands
           (cons 'backward-delete-char-untabify ac-trigger-commands))
-    (setq ac-comphist-file (concat emacs-savefile-dir "ac-comphist.dat"))
+    (setq ac-comphist-file (expand-file-name "ac-comphist.dat" auto-complete-directory))
     ;(ac-linum-workaround)
     ;(setq popup-use-optimized-column-computation nil)
     (unbind-key "C-s" ac-completing-map)))
@@ -364,24 +400,6 @@
               TeX-show-compilation t)
         ))))
 
-;;; douban-music-mode
-
-(use-package douban-music-mode :commands douban-music)
-
-;;; ibus-mode
-
-(use-package
-  ibus
-  :init (add-hook 'after-init-hook 'ibus-mode-on)
-  :config
-  (progn
-    (setq ibus-agent-file-name (expand-file-name "ibus/ibus-el-agent" emacs-packages-dir))
-    ;; Use C-/ for Undo command
-    (ibus-define-common-key ?\C-/ nil)
-    (global-unset-key (kbd "C-SPC"))
-    (global-set-key (kbd "C-SPC") 'ibus-toggle)
-    (setq ibus-cursor-color '("#d28445" "#6a9fb5" "#90a959"))))
-
 ;;; css-mode
 
 (use-package
@@ -392,9 +410,20 @@
 ;;; js3-mode
 
 (use-package
-  js3-mode
+  js2-mode
   :ensure t
-  :mode ("\\.js\\'" . js3-mode))
+  :mode ("\\.js\\'" . js2-mode)
+  :config
+  (setq-default
+    ;js2-bounce-indent-p t
+    js2-include-browser-externs t
+    ; js2-allow-keywords-as-property-names nil
+    ; ;; disable error highliting
+    ;js2-mode-show-parse-errors nil
+    js2-strict-missing-semi-warning nil
+    ; js2-highlight-external-variables nil
+    js-indent-level 2
+    js2-basic-offset 2))
 
 ;;; cmake-mode
 
@@ -472,13 +501,121 @@
   :config
   (progn ()))
 
-;;; themes
+(use-package
+  cal-china-x  ;; TODO
+  :config
+  (progn
+    (setq mark-holidays-in-calendar t)
+    (setq cal-china-x-important-holidays cal-china-x-chinese-holidays)
+    (setq calendar-holidays cal-china-x-important-holidays)))
 
-(use-package zenburn-theme :ensure t :disabled t)
-(use-package solarized-theme :ensure t :disabled t)
-(use-package color-theme-sanityinc-tomorrow :ensure t)
+;;; org
 
-;;; end
+(use-package
+  org
+  :ensure t
+  :mode ("\\.org\\'" . org-mode)
+  :config
+  (progn
+    (setq org-agenda-files (list "~/Documents/"
+                                 "~/Documents/Todo.org"))
+
+    (use-package org-fstree :ensure t)
+    (use-package org-mac-link :ensure t)
+
+    (setq org-log-done t
+          org-completion-use-ido t
+          org-edit-timestamp-down-means-later t
+          org-agenda-start-on-weekday nil
+          org-agenda-span 14
+          org-agenda-include-diary t
+          org-agenda-window-setup 'current-window
+          org-fast-tag-selection-single-key 'expert
+          org-export-kill-product-buffer-when-displayed t
+          org-use-speed-commands t
+          org-tags-column 80)
+
+    (global-set-key (kbd "C-c l") 'org-store-link)
+    (global-set-key (kbd "C-c g") 'org-mac-grab-link)
+    (global-set-key (kbd "C-c a") 'org-agenda)))
+
+;;; fill-column-indicator
+
+(use-package
+  fill-column-indicator
+  :ensure t
+  :config
+  (progn
+    (define-globalized-minor-mode
+      global-fci-mode
+      fci-mode
+      (lambda ()
+        (fci-mode t)))
+    (setq-default fci-rule-column 80)
+    (setq-default fci-rule-width 2)
+    (setq-default fci-dash-pattern 0.75)
+    (setq-default fci-rule-use-dashes 1)
+    (global-fci-mode t)))
+
+;;; popwin
+
+(use-package
+  popwin
+  :ensure t
+  :config
+  (progn
+    (push '("helm" :regexp t) popwin:special-display-config)
+    (push '("undo-tree" :width 0.4 :position right :regexp t) popwin:special-display-config)
+    (push '("*Buffer List*") popwin:special-display-config)
+    (push '("*Backtrace*" :noselect t) popwin:special-display-config)
+    (push '("*helm imenu*" :width 0.3 :position right) popwin:special-display-config)
+    (push '(" *auto-async-byte-compile*" :noselect t) popwin:special-display-config)
+    (push '(" *command-log*" :width 0.3 :position right :noselect t) popwin:special-display-config)
+    (popwin-mode t)))
+
+;;; uniquify: unique buffer names
+
+(use-package
+  uniquify
+  :init
+  (setq
+    uniquify-buffer-name-style 'post-forward
+    uniquify-separator ":"
+    uniquify-after-kill-buffer-p t
+    uniquify-ignore-buffers-re "^\\*"))
+
+;;;  saveplace: save location in file when saving files
+
+(use-package
+  saveplace
+  :init
+  (progn
+    (setq save-place-file (expand-file-name "saveplace" emacs-cache-dir))
+    (setq-default save-place t)))
+
+;;; savehist: save some history
+
+(use-package
+  savehist
+  :init
+  (progn
+    (setq savehist-additional-variables
+          '(search ring regexp-search-ring)
+          savehist-autosave-interval 60    ;; save every minute (default: 5 min)
+          savehist-file (expand-file-name "savehist" emacs-cache-dir))    ;; keep my home clean
+    (savehist-mode t)))
+
+;; recentf
+
+(use-package
+  recentf
+  :init
+  (progn
+    (setq
+      recentf-save-file (expand-file-name "recentf" emacs-cache-dir)    ;; keep my home clean
+      recentf-max-saved-items 100     ;; max save 100
+      recentf-max-menu-items 15)      ;; max 15 in menu
+    (recentf-mode t)))
 
 (provide 'modes)
 ;;; modes.el ends here
