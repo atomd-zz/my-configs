@@ -63,7 +63,7 @@
   :diminish yas-minor-mode
   :init (yas-global-mode t)
   :commands (yas-minor-mode yas-expand)
-  :mode ("/\\.emacs\\.d/snippets/" . snippet-mode)
+  :mode ("/\\.emacs\\.d/snippets/" . snippet-mode)  ;; TODO
   :config (add-to-list 'yas-snippet-dirs emacs-snippets-dir))
 
 ;;; expand-region
@@ -251,8 +251,11 @@
 (use-package
   maxframe
   :ensure t
-  ;; config (setq mf-offset-x 50)
   :init (add-hook 'window-setup-hook 'maximize-frame t))
+ ; :config
+ ; (progn
+ ;  (setq mf-offset-x 55)
+ ;  (setq mf-max-width 1380)))
 
 ;;; mic-paren
 
@@ -517,8 +520,10 @@
   :mode ("\\.org\\'" . org-mode)
   :config
   (progn
-    (setq org-agenda-files (list "~/Documents/"
-                                 "~/Documents/Todo.org"))
+    (setq org-agenda-files (list "~/Documents/org/gtd.org"))
+    (setq org-todo-keywords '((sequence "TODO" "STARTED" "WAITING" "|" "DONE")))
+    (setq org-tag-alist '(("blog" . ?b) ("daily" . ?d) ("errands" . ?e) ("family" . ?f) ("house" . ?h) ("ideas" . ?i) ("money" . ?n) ("monthly" . ?m)  ("repeating" . ?r) ("softwaredev" . ?s) ("someday" . ?o) ("uncategorized" . ?u) ("weekly" . ?w) ("yearly" . ?y)))
+    (setq org-archive- (expand-file-name "~/Documents/org/gtd.org::* Archive"))
 
     (use-package org-fstree :ensure t)
     (use-package org-mac-link :ensure t)
@@ -527,6 +532,11 @@
           org-completion-use-ido t
           org-edit-timestamp-down-means-later t
           org-agenda-start-on-weekday nil
+;          org-startup-indented t
+;          org-indent-mode t
+          org-startup-folded 'content
+          org-src-fontify-natively t
+          org-link-file-path-type 'relative
           org-agenda-span 14
           org-agenda-include-diary t
           org-agenda-window-setup 'current-window
@@ -535,8 +545,11 @@
           org-use-speed-commands t
           org-tags-column 80)
 
+
     (global-set-key (kbd "C-c l") 'org-store-link)
     (global-set-key (kbd "C-c g") 'org-mac-grab-link)
+    (global-set-key (kbd "C-c r") 'org-remember)
+    (global-set-key (kbd "C-c b") 'org-iswitchb)
     (global-set-key (kbd "C-c a") 'org-agenda)))
 
 ;;; fill-column-indicator

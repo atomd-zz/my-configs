@@ -17,7 +17,8 @@
   (blink-cursor-mode -1))
 
 ;; disable startup screen
-(setq inhibit-startup-screen t)
+(setq inhibit-splash-screen t)
+(setq inhibit-startup-message t)
 
 ;; nice scrolling
 (setq scroll-margin 0
@@ -28,11 +29,6 @@
 (column-number-mode t)
 (size-indication-mode t)
 (diminish 'visual-line-mode)
-
-;; Run at full power please
-(put 'downcase-region 'disabled nil)
-(put 'upcase-region 'disabled nil)
-(put 'narrow-to-region 'disabled nil)
 
 ;;; powerline
 

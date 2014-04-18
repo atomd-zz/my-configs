@@ -278,6 +278,7 @@ if has('gui_running')
         \set guioptions+=m <Bar>
         \endif<CR>
 
+    set guifont=Monaco:h13
     colorscheme molokai
     let g:pretty_statusline=1
 
@@ -299,5 +300,4 @@ else
         autocmd BufEnter * match OverLength /\%81v/ "/\%81v.*/
     augroup END
 endif
-
 " }}}

@@ -2,7 +2,7 @@
 ZSH=$HOME/.oh-my-zsh
 
 # Look in ~/.oh-my-zsh/themes/
-# ZSH_THEME="af-magic"
+# ZSH_THEME="agnoster"
 # ZSH_THEME="dpoggi"
 ZSH_THEME="seeker"
 
@@ -10,7 +10,7 @@ ZSH_THEME="seeker"
 CASE_SENSITIVE="true"
 
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-plugins=(git vagrant scala sbt python pip tmux colored-man common-aliases cp sudo zsh-syntax-highlighting z bundler)
+plugins=(virtualenv-prompt vagrant scala sbt tmux colored-man common-aliases cp sudo zsh-syntax-highlighting z bundler)
 
 source $ZSH/oh-my-zsh.sh
 

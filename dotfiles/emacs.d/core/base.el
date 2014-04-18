@@ -6,6 +6,8 @@
 
 (setq gc-cons-threshold 50000000)
 (setq message-log-max 16384)
+(setq default-major-mode 'text-mode)
+
 ;; enable y/n answers
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -90,6 +92,7 @@
 
 ;; server
 (require 'server)
+(setq server-use-tcp t)
 (unless (server-running-p) (server-start))
 
 (provide 'base)
