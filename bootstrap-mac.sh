@@ -23,9 +23,6 @@ link vim
 link vimrc
 vim +BundleInstall +qall
 
-echo "init emacs ...."
-link emacs.d
-
 # echo "git submodule update --init for jedi-vim"
 # JEDI="dotfiles/vim/bundle/jedi-vim"
 # if [ ! -d $JEDI ]; then
